@@ -4,7 +4,7 @@ Date: 2017-08-16 13:48
 
 ###Fall 2017:
 
-* [Graduate Distributed Systems (CS9223)](http://gussand.github.io/content/pages/ds.html)
+* [Graduate Distributed Systems (CS9223)](distributed-systems-fall-2017.html)
 
 
 * [Intro to Operating Systems (CS3224)](<http://medium.com>)

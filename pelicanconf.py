@@ -68,7 +68,7 @@ USE_FOLDER_AS_CATEGORY = False
 MAIN_MENU = True
 HOME_HIDE_TAGS = True
 
-LINKS = (('blog', 'content/teaching.html'),)
+LINKS = (('blog', '/archives.html'),)
 #          ('Research', 'http://gussand.github.io/research'))
 
 SOCIAL = (('linkedin', 'https://www.linkedin.com/in/gsandoval'),
