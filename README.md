@@ -6,7 +6,7 @@ Building the Blog
 
 Clone the repository & make sure submodules are included
 
-$ git clone https://github.com/jakevdp/jakevdp.github.io-source.git
+$ git clone https://github.com/gussand/gussand.github.io-source.git
 $ git submodule update --init --recursive
 Install the required packages:
 
