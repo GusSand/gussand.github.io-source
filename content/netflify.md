@@ -14,3 +14,4 @@ I had setup this blog using github pages. Since I'm a very infrequent blogger, e
 So today I read in Twitter about [Netlify](<http://Netlify.com>). It literally took me 5 minutes and now I deploy automatically.
 
 
+Got a lot of tips from this [Netflify repo](<https://github.com/netlify-templates/pelican-netlify-cms>)
