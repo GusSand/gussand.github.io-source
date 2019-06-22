@@ -61,7 +61,7 @@ SEARCH_BOX = True
 
 
 # conf for Flex theme by Alexandre Vicenzi
-THEME = "/mnt/c/dev/pelican-themes/Flex"
+#THEME = "~/pelican-themes/Flex"
 ROBOTS = 'index, '
 
 USE_FOLDER_AS_CATEGORY = False
