@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <!-- Basic meta elements -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type"    content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Canonical link to help search engines -->
+    <link rel="canonical"     href="http://localhost:4000/fodl/representation01/" />
+    <link rel="shortcut icon" type="image/x-icon" href="/fodl/static/favicon.ico" />
+    <link rel="alternate"     type="application/rss+xml" title="RSS" href="/fodl/atom.xml" />
+    <link rel="stylesheet"    href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i|Playfair+Display+SC&amp;display=swap" />
+    <link rel="stylesheet"    href="/fodl/static/style.css" />
+
+    <title>Chapter 1 - Memorization</title>
+
+    <!-- Dublin Core metadata for Zotero -->
+    <meta name="DC.title"   content="Chapter 1 - Memorization" />
+    <meta name="DC.creator" content="" />
+    <meta name="DC.date"    content="" />
+    <meta name="DC.source"  content="Foundations of Deep Learning" />
+
+    <!-- Open Graph metadata -->
+    <meta property="og:type"           content="article" />
+    <meta property="og:title"          content="Chapter 1 - Memorization" />
+    <meta property="og:article:author" content="" />
+    <meta property="og:description"    content="Quicklinks" />
+    <meta property="og:url"            content="http://localhost:4000/fodl/representation01/" />
+    <meta property="og:image"          content="http://localhost:4000/fodl/static/open-graph-logo.png" />
+    <meta property="og:image:width"    content="200" />
+    <meta property="og:image:height"   content="200" />
+
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css"
+      integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js"
+      integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+    <!-- KaTeX auto-render extention: https://katex.org/docs/autorender.html -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js"
+      integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+      var macros = {
+          "\\P": "\\mathbb{P}"
+      }, delimiters = [
+          { left: "$$",  right: "$$",  display: true}, // Technically, this does not work. See below.
+          { left: "\\[", right: "\\]", display: true},
+          { left: "$",   right: "$",   display: false},
+          { left: "\\(", right: "\\)", display: false}
+      ];
+
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, { delimiters: delimiters, macros: macros });
+
+        // Currently GitHub pages overrides math-engine: mathjax in _config, hence $$..$$ are converted to to scripts tags.
+        // See: https://github.com/github/pages-gem/pull/545
+        document.querySelectorAll("script[type='math/tex']").forEach(function(el) {
+          el.outerHTML = katex.renderToString(el.textContent, { displayMode: false, macros: macros });
+        });
+
+        document.querySelectorAll("script[type='math/tex; mode=display']").forEach(function(el) {
+          el.outerHTML = katex.renderToString(el.textContent.replace(/%.*/g, ''), { displayMode: true, macros: macros });
+        });
+      });
+    </script>
+    <style>.katex { font-size: 1.15em; }</style>
+    <!-- KaTeX copy-tex extention: https://github.com/KaTeX/KaTeX/tree/master/contrib/copy-tex -->
+    <link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.min.js"
+      integrity="sha384-XhWAe6BtVcvEdS3FFKT7Mcft4HJjPqMQvi5V4YhzH9Qxw497jC13TupOEvjoIPy7" crossorigin="anonymous"></script>
+  </head>
+
+  <body class="theme-base-">
+    
+    <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" />
+
+    <!-- Toggleable sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-item">
+        <p>Quicklinks</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="sidebar-nav-item" href="/fodl/">Home</a>
+        <a class="sidebar-nav-item" href="/fodl/manual/">Manual</a>
+        <a class="sidebar-nav-item" href="/fodl/search/">Search</a>
+
+        <!-- The code below is used for manually entered links -->
+        <a href="https://github.com/mahrud/proof"
+          class="sidebar-nav-item" target="_blank">GitHub Repository</a>
+      </nav>
+
+      <div class="sidebar-item">
+        <p>Distributed under an MIT license.</p>
+      </div>
+    </div>
+
+    <!--
+      Wrap is the content to shift when toggling the sidebar.
+      We wrap the content to avoid any CSS collisions with our real content.
+    -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/fodl/">Foundations of Deep Learning</a><br />
+            <small>NYU Tandon, Spring 2022</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content" id="main">
+<!-- ########################################################################################### -->
+<div class="page">
+  <h1 class="page-title">Chapter 1 - Memorization</h1>
+  <p>Let us begin by trying to rigorously answer a very simple question:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>How many neurons suffice?
+</code></pre></div></div>
+
+<p>Upon reflection it should clear that this question isn’t well-posed. Suffice for what? For good performance? On what task? Do we even know if this answer is well-defined – perhaps it depends on some hard-to-estimate quantity related to the learning problem? Even if we were able to get a handle on this quantity, does it matter how the neurons are connected – should the network be wide/shallow, or narrow/deep?</p>
+
+<p>Let us begin simple. Suppose all we have is a bunch of training data points:
+\[ X = \lbrace (x_i, y_i)\rbrace_{i=1}^n \subset \mathbb{R}^d \times \mathbb{R} \]
+and our goal will be to discover a network that <em>exactly</em> memorizes $X$. That is, we will learn a function $f$ that, when evaluated on every data point $x_i$ in the training data, returns $y_i$. Equivalently, if we define empirical risk via the squared error loss:</p>
+
+\[\begin{aligned}
+\hat{y} &amp;= f(x), \\
+l(y,\hat{y}) &amp;= 0.5(y - \hat{y})^2, \\
+R(f) &amp;= \sum_i \frac{1}{n} l(y_i, \hat{y_i}),
+\end{aligned}\]
+
+<p>then $f$ achieves <em>zero empirical risk</em>. Our intuition says (and we will prove more versions of this later) is that a very large (very wide, or very deep, or both) network is likely enough to fit basically anything we like. So really, we want <em>reasonable</em> upper bounds on the number of neurons needed for exact memorization.</p>
+
+<p>But why should we care about memorization anyway? After all, machine learning folks are taught to be wary of <a href="https://en.wikipedia.org/wiki/Overfitting">overfitting</a> to the training set. In introductory ML courses we spend several hours (and homework sets) covering the <a href="https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff">bias-variance</a> tradeoff, the importance of adding a regularizer to decrease variance (at the expense of incurring extra “bias”), etc etc.</p>
+
+<p>Unfortunately, deep learning practice throws this classical way of ML thinking out of the window. We seldom use explicit regularizers, instead relying on standard losses. We typically train deep neural networks to achieve 100\% (train) accuracy. Later, we will try to understand why networks trained to <em>perfectly</em> interpolate the training data still generalize well, but for now let’s focus on just achieving a representation that enables perfect memorization.</p>
+
+<h2 class="label" id="basics">Basics</h2>
+
+<p>First, a basic definition of a “neural network”.</p>
+
+<p>For our purposes, neural network is composed of several primitive “units”, each of which we will call a <em>neuron</em>. Given an input vector $x \in \mathbb{R}^d$, a neuron transforms the input according to the following functional form:</p>
+
+\[z = \psi(\sum_{j=1}^d w_j x_j + b) .\]
+
+<p>Here, $w_j$ are the weights, $b$ is a scalar called the <em>bias</em>, and $\psi$ is a nonlinear scalar transformation called the <em>activation function</em>; a typical activation function is the “ReLU function” $\psi(z) = \max(0,z)$ but we will also consider others.</p>
+
+<p><img src="/fodl/assets/nn.png" alt="Structure of a deep neural network" /></p>
+
+<p>A neural network is a <em>feedforward composition</em> of several neurons, typically arranged in the form of <em>layers</em>. So if we imagine several neurons participating at the $l^{\text{th}}$ layer, we can stack up their weights (row-wise) in the form of a <em>weight matrix</em> $W^{(l)}$. The output of neurons forming each layer forms the corresponding input to all of the neurons in the next layer. So a neural network with two layers of neurons would have</p>
+
+\[\begin{aligned}
+z_{1} &amp;= \psi(W_{1} x + b_{1}), \\
+z_{2} &amp;= \psi(W_{2} z_{1} + b_{2}), \\
+y &amp;= W_{3} z_{2} + b_{3} .
+\end{aligned}\]
+
+<p>Analogously, one can extend this definition to $L$ layers for any $L \geq 1$. The nomenclature is a bit funny sometimes. The above example is either called a “3-layer network” or “2-hidden-layer network”, depending on who you ask. The output $y$ is considered as its own layer and not considered as “hidden” (also notice that it doesn’t have any activation in this case; that’s typical.)</p>
+
+<h2 class="label" id="memorization-capacity-standard-results">Memorization capacity: Standard results</h2>
+
+<script>
+macros["\\f"] = "\\mathscr{F}"
+</script>
+
+<p>A lot of interesting quirks arise even in the simplest cases.</p>
+
+<p>Let us focus our attention on the ability of <em>two-layer</em> networks (or one-hidden-layer networks) to memorize $n$ data points. We will restrict discussion to ReLU activations but the arguments below are generally applicable. If there are $m$ hidden neurons and if $\psi$ is the ReLU then our hypothesis class $\f_m$ comprises all functions $f$ such that for suitable weight parameters $(\alpha_i, w_i)$ and bias parameters $b_i$, we have:</p>
+
+<p>\[ f(x) = \sum_{i=1}^m \alpha_i \psi(\langle w_i, x \rangle + b_i) . \]</p>
+
+<p>Intuitively, $m &lt; \infty$ is a trivial upper bound on any dataset (we will be more rigorous about this when we prove universal approximation results). If we have infinitely many parameters then memorization should be trivial. Let us get a better upper bound for $m$. Our first result shows that $m = n$ should suffice.</p>
+
+<p class="theorem"><strong class="label" id="MemorizationBasic">Theorem</strong>
+  Let $f$ be a two-layer ReLU network with $m = n$ hidden neurons. For any <em>arbitrary</em> dataset $X = \lbrace (x_i, y_i)_{i=1}^n\rbrace \subset \mathbb{R}^d \times \mathbb{R}$ where $x_i$ are in general position, the weights and biases of $f$ can be chosen such that $f$ exactly interpolates $X$.</p>
+
+<p><strong class="label" id="MemorizationBasicProof1">Proof</strong>
+  This result is non-constructive and seems to be folklore, dating back to at least Baum<sup id="fnref:baum" role="doc-noteref"><a href="#fn:baum" class="footnote" rel="footnote">1</a></sup>. For modern versions of this proof, see Bach<sup id="fnref:bach" role="doc-noteref"><a href="#fn:bach" class="footnote" rel="footnote">2</a></sup> or Bubeck et al.<sup id="fnref:bubeck1" role="doc-noteref"><a href="#fn:bubeck1" class="footnote" rel="footnote">3</a></sup>.</p>
+
+<p class="proof">Define the space of <em>arbitrary width</em> two-layer networks:
+  \[\f = \bigcup_{m \geq 0} \f_m . \]
+  The high level idea is that $\f$ forms a <em>vector space</em>. This is easy to see, since it is closed under additions and scalar multiplications. Formally, fix $x$ and consider the element $\psi_{w,b}: x \mapsto \psi(\langle w, x \rangle + b)$. Then, $\text{span}(\psi_{w,b})$ forms a vector space.  Now, consider the linear <em>pointwise</em> evaluation operator $\Psi : V \rightarrow \mathbb{R}^n$:
+  \[\Psi(f) = (f(x_1), f(x_2), \ldots, f(x_n)) .\]
+  We know from classical universal approximation (Chapter 2) that <em>every vector</em> in $\mathbb{R}^n$ can be written as <em>some</em> (possibly infinite)  combination of neurons. Therefore, $\text{Range}(\Psi) = \mathbb{R}^n$, or $\text{dim(Range}(\Psi)) = n$. Therefore, there <em>exists</em> some basis of size $n$ with the same span! Call this basis $\lbrace \psi_1, \ldots,\psi_n\rbrace$. This basis can be used to express any set of labels by choosing appropriate coefficients in a standard basis representation $y = \sum_{i=1}^n \alpha_i \psi_i$.
+  The result follows.</p>
+
+<p>In fact, the above result holds for any activation function $\psi$ that is not a polynomial<sup id="fnref:leshno" role="doc-noteref"><a href="#fn:leshno" class="footnote" rel="footnote">4</a></sup>; we will revisit this curious property later.</p>
+
+<p>Really, we didn’t do much here. Since the “information content” in $n$ labels has dimension $n$, we can extract any arbitrary basis (written in the form of neurons) and write down the expansion of the labels in terms of this basis. Since this approach may be a bit abstract, let’s give an alternate <em>constructive</em> proof.</p>
+
+<p class="proof"><strong id="MemorizationBasicProof2">Proof (Alternate.)</strong>
+  This proof can be attributed to Zhang et al<sup id="fnref:zhang" role="doc-noteref"><a href="#fn:zhang" class="footnote" rel="footnote">5</a></sup>. Suppose $m = n.$ Since all $x_i$’s are distinct and in general position, we can pick a $w$ such that if define $z_i := \langle w, x_i \rangle$ then without loss of generality (or by re-indexing the data points):
+  \[ z_1 &lt; z_2 &lt; \ldots z_n . \]
+  One way to pick $w$ is by random projection: pick $w$ from a standard $d$-variate Gaussian distribution; then the above holds with high probability. If the above relation between $z_i$ holds, we can find some sequence of $b_i$ such that:
+  \[ b_1 &lt; z_1 &lt; b_2 &lt; z_2 &lt; \ldots &lt; b_n &lt; z_n . \]
+  Now, let’s define an $n \times n$ matrix $A$ such that
+  \[ A_{ij} := \text{ReLU}(z_i - b_j) = \max(z_i - b_j, 0) . \]
+  Since by definition, each $z_i$ is only bigger than all $b_j$ for $1 \leq j \leq i$, we have that $A$ is a <em>lower triangular</em> matrix with positive entries on the diagonal, and therefore full rank. Moreover, for any $\alpha \in \mathbb{R}^n$, the product $A \alpha$ is the superposition of exactly $n$ ReLU neurons (the weights are the same for all of them, but the biases are distinct). Set $\alpha = A^{-1} y$ and we are done.</p>
+
+<p class="remark"><strong class="label" id="MemorizationBasic2">Remark</strong>
+The above proofs used biases, but if we restrict our attention to <em>bias-free</em> networks, that’s fine too, we just need to use different weights for the $n$ hidden neurons. Such a network is called a <em>random feature model</em>; see <a href="https://people.eecs.berkeley.edu/~brecht/papers/07.rah.rec.nips.pdf">here</a> and <a href="https://arxiv.org/abs/1810.04374">here</a>.</p>
+
+<h2 class="label" id="memorization-capacity-improved-results">Memorization capacity: Improved results</h2>
+
+<p>The above result shows that $m = n$ neurons are sufficient to memorize pretty much any dataset. Can we get away with fewer neurons? Notice that really the network has to “remember” only the $n$ labels; but since there are $n$ neurons, each with $d$ input edges, the number of <em>parameters</em> is $nd$.  (<em>Note: not technically correct; the second proof only uses $n$ <strong>distinct</strong> weights and $n$ biases.</em>) It turns out that we can indeed do better.</p>
+
+<p class="theorem"><strong class="label" id="MemorizationBetter">Theorem</strong>
+  For any dataset of $n$ points in general position, $m = 4 \lceil \frac{n}{d} \rceil$ neurons suffice to memorize it.</p>
+
+<p><strong class="label" id="MemorizationBetterProof">Proof</strong>
+  For ReLU activations, this proof is in Bubeck et al<sup id="fnref:bubeck1:1" role="doc-noteref"><a href="#fn:bubeck1" class="footnote" rel="footnote">3</a></sup>, although Baum<sup id="fnref:baum:1" role="doc-noteref"><a href="#fn:baum" class="footnote" rel="footnote">1</a></sup> proved a similar result for threshold activations and binary labels.</p>
+
+<p>Notice that $d = \Omega(1)$ is actually beneficial here; higher input dimension implies <em>easier</em> memorization. In some ways this is a <em>blessing of dimensionality</em> phenomenon.</p>
+
+<p>We will prove Baum’s result first. Suppose we have threshold activations (i.e., $\psi(z) = \mathbb{I}(z \geq 0)$) and binary labels $y_i \in \pm {1}$. We iteratively build a network as follows. Without loss of generality, we can assume that there are at least $d$ points with label equal to $y_i = 1$; index them as $x_1, x_2, \ldots, x_d$. Since the points are in general position, we can find an affine subspace that exactly interpolates these points:</p>
+
+\[\langle w_1, x_i \rangle = b_1, \quad i \in [d]\]
+
+<p>and record $(w_1, b_1)$. (Importantly, again since the points are in general position no other points lie in this subspace.)</p>
+
+<p><img src="/fodl/assets/baum-construction.png" alt="Iteratively fitting neurons to a dataset." /></p>
+
+<p>Now, form a <em>very thin indicator slab</em> using for this affine subspace using exactly two neurons:</p>
+
+\[x \mapsto \psi(\langle w_1,x \rangle - (b_1-\varepsilon)) - \psi(\langle w_1,x \rangle - (b_1+\varepsilon))\]
+
+<p>for some small enough $\varepsilon &gt; 0$. This function is equal to 1 for exactly the points in the subspace, and zero for all other points. For this group of $d$ points we can assign the <em>output</em> weight $\alpha_1 = 1$. Iterate this argument $\lceil \frac{n}{d} \rceil$ times and we are done! Therefore, $2 \lceil \frac{n}{d} \rceil$ threshold neurons suffice if the labels are binary.</p>
+
+<p>The exact same argument can be extended to ReLU activations and arbitrary (scalar) labels. Again, we iteratively build the network. We pick an arbitrary set of $d$ points, through which we can interpolate an affine subspace:</p>
+
+\[\langle u, x_i \rangle = b, \quad i \in [d] .\]
+
+<p>We now show that we can memorize these $d$ data points using 4 ReLU neurons. The trick is to look at the “directional derivative” of the ReLU:</p>
+
+\[g: x \mapsto \frac{\psi(\langle u + \delta v, x \rangle - b) - \psi(\langle u, v \rangle - b)}{\delta} .\]
+
+<p>As $\delta \rightarrow 0$, the right hand side approaches the quantity:</p>
+
+\[g: x \mapsto \psi'(\langle u, x \rangle - b) \langle v, x \rangle .\]
+
+<p>But: the first part is the “derivative” of the ReLU, which is exactly the threshold function! Using the thin-slab-indicator trick in the proof above, the difference of two such functions (with slightly different $b$) forms an indicator on a thin slab around these $d$ points:</p>
+
+\[f = g_{u,v,b-\varepsilon} - g_{u,v,b+\varepsilon} .\]
+
+<p>Since we are using differences-of-differences, we need 4 ReLUs to realize $f$. It now remains to pick $v$. But this is easy: since the data are in general position, just solve for $v$ such that</p>
+
+\[\langle v, x_i \rangle = y_i .\]
+
+<p class="proof">Repeat this fitting procedure $\lceil \frac{n}{d} \rceil$ times and we are done.</p>
+
+<p class="remark"><strong class="label" id="MemorizationRem1">Remark</strong>
+The above construction is somewhat wacky/combinatorial. The weights of each neuron was picked myopically (we never revisited data points) and locally (each neuron only depended on a small subset of data points).</p>
+
+<p class="remark"><strong class="label" id="MemorizationRem3">Remark</strong>
+The above construction says very little about how large networks need to be in order for “typical” learning algorithms (such as SGD) to succeed. We will revisit this in the Optimization chapters. For a recent result exploring the properties of “typical” gradient-based learning methods in the $O(n/d)$ regime, see here<sup id="fnref:hong" role="doc-noteref"><a href="#fn:hong" class="footnote" rel="footnote">6</a></sup>.</p>
+
+<p class="remark"><strong class="label" id="MemorizationRem5">Remark</strong>
+All the above results used a standard dense feedforward architecture. Analogous memorization results have been shown for other architectures commonly used in practice today: convnets<sup id="fnref:cnn" role="doc-noteref"><a href="#fn:cnn" class="footnote" rel="footnote">7</a></sup>, ResNets<sup id="fnref:resnet" role="doc-noteref"><a href="#fn:resnet" class="footnote" rel="footnote">8</a></sup>, transformers<sup id="fnref:xformers" role="doc-noteref"><a href="#fn:xformers" class="footnote" rel="footnote">9</a></sup>, etc.</p>
+
+<h2 class="label" id="lower-bounds">Lower bounds</h2>
+
+<p>The above results show that we can memorize $n$ (scalar) labels with no more than $O(n/d)$ ReLU neurons – each with $d$ incoming edges, which means that the number of learnable weights in this network is $O(n)$. Is this upper bound tight, or is there hope for doing any better?</p>
+
+<p>The answer seems to be <em>no</em>, and intuitively it makes sense from a parameter counting perspective. Sontag<sup id="fnref:sontag" role="doc-noteref"><a href="#fn:sontag" class="footnote" rel="footnote">10</a></sup> proved an early result along these lines, showing that if some function $f$ that is described with $o(n)$ parameters is <em>analytic</em> (meaning that it is smooth and has convergent power series) and <em>definable</em> (meaning that it can be expressed by some arbitrary composition of rational operations and exponents), then there exists at least one dataset of $n$ points that the network cannot memorize. This result also holds for functions that are <em>piecewise</em> analytic and definable, meaning that neural networks (of arbitrary depth! not just two layers!) are applicable to this theorem.</p>
+
+<p><em>(Note: this observation is not technically correct; we can get better by “bit stuffing”. If we assume slightly more restrictive properties on the data and allow the network weights to be unbounded, then this bound can be improved to $O(\sqrt{n})$ parameters. We will revisit this later.)</em></p>
+
+<p>So it may seem interesting that we were able to get best-possible memorization capacity using simple 2-layer networks. So does additional depth buy us anything at all? The answer for this is <em>yes</em>: we can decrease the number of <em>hidden neurons</em> in the network significantly when we move from 1- to 2-hidden-layer networks. We will revisit this in Chapter 3.</p>
+
+<h2 class="label" id="robust-interpolation">Robust interpolation</h2>
+
+<p><strong><em>(Complete)</em></strong></p>
+
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:baum" role="doc-endnote">
+
+      <p>E. Baum, <a href="https://www.sciencedirect.com/science/article/pii/0885064X88900209"><em>On the capabilities of multilayer perceptrons</em></a>, 1989. <a href="#fnref:baum" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a> <a href="#fnref:baum:1" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:bach" role="doc-endnote">
+
+      <p>F. Bach, <a href="https://jmlr.org/papers/v18/14-546.html"><em>Breaking the Curse of Dimensionality with Convex Neural Networks</em></a>, 2017. <a href="#fnref:bach" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:bubeck1" role="doc-endnote">
+
+      <p>S. Bubeck, R. Eldan, Y. Lee, D. Mikulincer, <a href="https://arxiv.org/abs/2006.02855">Network size and weights size for memorization with two-layers neural networks</a>, 2020. <a href="#fnref:bubeck1" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a> <a href="#fnref:bubeck1:1" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:leshno" role="doc-endnote">
+
+      <p>M. Leshno, V. Lin, A. Pinkus, S. Schocken, <a href="https://www.sciencedirect.com/science/article/abs/pii/S0893608005801315">Multilayer feedforward networks with a nonpolynomial activation function can approximate any function</a>, 1993. <a href="#fnref:leshno" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:zhang" role="doc-endnote">
+
+      <p>C. Zhang, S. Bengio, M. Hardt, B. Recht, O. Vinyals, <a href="https://arxiv.org/abs/1611.03530">Understanding deep learning requires rethinking generalization</a>, 2017. <a href="#fnref:zhang" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:hong" role="doc-endnote">
+
+      <p>J. Zhang, Y. Zhang, M. Hong, R. Sun, Z.-Q. Luo, <a href="https://proceedings.neurips.cc/paper/2021/hash/4c7a167bb329bd92580a99ce422d6fa6-Abstract.html">When Expressivity Meets Trainability: Fewer than $n$ Neurons Can Work</a>, 2021. <a href="#fnref:hong" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:cnn" role="doc-endnote">
+
+      <p>Q. Nguyen and M. Hein, <a href="https://arxiv.org/abs/1710.10928">Optimization Landscape and Expressivity of Deep CNNs</a>, 2018. <a href="#fnref:cnn" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:resnet" role="doc-endnote">
+
+      <p>M. Hardt and T. Ma, <a href="https://openreview.net/forum?id=ryxB0Rtxx">Identity Matters in Deep Learning</a>, 2017. <a href="#fnref:resnet" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:xformers" role="doc-endnote">
+
+      <p>C. Yun, Y. Chang, S. Bhojanapalli, A. Rawat, S. Reddi, S. Kumar, <a href="https://proceedings.neurips.cc/paper/2020/hash/9ed27554c893b5bad850a422c3538c15-Abstract.html">$O(n)$ Connections are Expressive Enough: Universal Approximability of Sparse Transformers</a>, 2020. <a href="#fnref:xformers" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:sontag" role="doc-endnote">
+
+      <p>E. Sontag, <a href="http://www.sontaglab.org/FTPDIR/generic.pdf">Shattering All Sets of k Points in “General Position” Requires (k − 1)/2 Parameters</a>, 1997. <a href="#fnref:sontag" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<!-- ########################################################################################### -->
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+    // Highlight search Query
+    var url = window.location.href;
+    if (url.lastIndexOf("?q=") > 0) {
+      // get the index of the parameter, add three (to account for length)
+      var stringloc = url.lastIndexOf("?q=") + 3;
+      // get the substring (query) and decode
+      var searchquery = decodeURIComponent(url.substr(stringloc));
+      // regex matches at beginning of line, end of line or word boundary, useful for poetry
+      var regex = new RegExp("(?:^|\\b)(" + searchquery + ")(?:$|\\b)", "gim");
+      // get, add mark and then set content
+      var content = document.getElementById("main").innerHTML;
+      document.getElementById("main").innerHTML = content.replace(regex, "<mark>$1</mark>");
+    }
+
+    // Toggle sidebar
+    (function(document) {
+      var toggle = document.querySelector('.sidebar-toggle');
+      var sidebar = document.querySelector('#sidebar');
+      var checkbox = document.querySelector('#sidebar-checkbox');
+
+      document.addEventListener('click', function(e) {
+        var target = e.target;
+
+        if(!checkbox.checked ||
+           !sidebar.contains(target) ||
+           (target === checkbox || target === toggle)) return;
+
+        checkbox.checked = false;
+      }, false);
+    })(document);
+    </script>
+
+  </body>
+</html>

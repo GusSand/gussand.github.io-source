@@ -1,0 +1,109 @@
+I"�<p>OK, so implicit regularization (via the choice of training algorithm) may be part of the reason for generalization, but almost surely not the entire picture.</p>
+
+<p>It may be useful to revisit classical ML here. Very broadly, the conventional thinking has been:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Parsimony enables generalization.
+</code></pre></div></div>
+
+<p>The challenge is to precisely define what “parsimony” means here, since there are a myriad different ways of doing this. The bulk of work in generalization theory explores more and more refined complexity measures of ML models, but as we will see below, most existing classical approaches lead to <em>vacuous</em> bounds for deep networks. Getting non-vacuous generalization guarantees is a major challenge.</p>
+
+<h2 class="label" id="warmup-finite-hypothesis-classes">Warmup: Finite hypothesis classes</h2>
+
+<p>Below, $R(f)$ is the population risk, $\hat{R}(f)$ is the empirical risk, and we would like $R(f) - \hat{R}(f)$ to be (a) small, and (b) decreasing as a function of sample size.
+<strong>Complete.</strong></p>
+
+<script>
+macros["\\f"] = "\\mathscr{F}"
+</script>
+
+<p class="theorem"><strong class="label" id="HoeffdingBound">Theorem</strong>
+  Consider the setting of binary classification, and let $\f$ be a hypothesis class with finitely many elements. If $n \geq O\left( \frac{1}{\varepsilon^2} \log \frac{|\f|}{\delta}\right)$ then with probability at least $1-\delta$, we have that for every $f \in \f$, $|R(f) - \hat{R}(f)| \leq \varepsilon$.</p>
+<p class="proof"><strong>Proof</strong>
+  Hoeffding + union bound.</p>
+
+<p class="remark"><strong class="label" id="GenRemark1">Remark</strong>
+  Observe that this holds for all $f \in \f$, not just the optimal predictor. Such a bound is called a <em>uniform convergence</em> result.</p>
+
+<p class="remark"><strong class="label" id="GenRemark2">Remark</strong>
+  This works irrespective of the choice of $\f$ or the data distribution, which could be a weakness of the technique. Even in incompatible cases (for example, the data is highly highly nonlinear, but we only use linear classifiers), one can use the above result that the generalization error is small. The lesson is that we need to control both train and generalization error.</p>
+
+<p class="remark"><strong class="label" id="GenRemark1">Remark</strong>
+  Rearranging terms, we get that the generalization error $\lesssim \frac{1}{\sqrt{n}}$, which is very typical. Classical theory tells us that this is a natural stopping point for optimization – this is the “noise floor” so we don’t have to optimize the train error below this level. (<em>Note: unfortunately, deep learning doesn’t obey this, and optimizing to zero is indeed beneficial; this is the “double descent” phenomenon.</em>)</p>
+
+<p class="remark"><strong class="label" id="GenRemark1">Remark</strong>
+  The scaling of the sample complexity looks like $n \approx \log |\f|$, which basically is the number of “bits” needed to encode any particular hypothesis.</p>
+
+<h2 class="label" id="complexity-measures">Complexity measures</h2>
+
+<p>Long list of ways to extend the above reasoning. The major drawback is that the above bound is meaningful only for hypothesis classes $\f$ with finite cardinality.  Alternatives:</p>
+
+<ul>
+  <li>Covering number</li>
+  <li>VC-dimension</li>
+  <li>Pseudo-dimension</li>
+</ul>
+
+<h3 id="agnostic-pac-learning">Agnostic (PAC) learning</h3>
+
+<h3 id="data-dependent-bounds">Data-dependent bounds</h3>
+
+<p>Definition of Rademacher complexity, upper bounds for NN.</p>
+
+<h3 id="pac-bayes-bounds">PAC-Bayes bounds</h3>
+
+<p>Possibly first approach to produce “non-vacuous” bounds, at least for small networks. Key results: basic approach<sup id="fnref:mcallester" role="doc-noteref"><a href="#fn:mcallester" class="footnote" rel="footnote">1</a></sup>, application to DL<sup id="fnref:dzuigateroy18" role="doc-noteref"><a href="#fn:dzuigateroy18" class="footnote" rel="footnote">2</a></sup>.</p>
+
+<h2 class="label" id="error-bounds-for-deep-neural-networks">Error bounds for (deep) neural networks</h2>
+
+<p>Key results: here<sup id="fnref:bartlett97" role="doc-noteref"><a href="#fn:bartlett97" class="footnote" rel="footnote">3</a></sup>, here<sup id="fnref:bartlett98" role="doc-noteref"><a href="#fn:bartlett98" class="footnote" rel="footnote">4</a></sup>, here<sup id="fnref:bartlett19" role="doc-noteref"><a href="#fn:bartlett19" class="footnote" rel="footnote">5</a></sup>.</p>
+
+<h2 class="label" id="possible-roadblocks">Possible roadblocks?</h2>
+
+<p>All of the above bounds lead to generalization bounds of the form:</p>
+
+\[\text{Test error} \leq \text{train error}~+~O \left(\frac{\text{complexity measure}}{\sqrt{n}}\right),\]
+
+<p>and progress has been focused on defining better and better complexity measures. However, two issues with this:</p>
+
+<ul>
+  <li>
+    <p>Usually, the complexity measure in the numerator is far too large anyway, leading to “vacuous” bounds. For example, in <sup id="fnref:bartlett19:1" role="doc-noteref"><a href="#fn:bartlett19" class="footnote" rel="footnote">5</a></sup> it reduces to $\text{depth} \times \text{width}$, which is too large in the overparameterized setting.</p>
+  </li>
+  <li>
+    <p>This also (seemingly) means that error bounds should decrease with dataset size, for a fixed model class. Not the case :( .</p>
+  </li>
+</ul>
+
+<p>A recent result provides evidence<sup id="fnref:nagarajan19" role="doc-noteref"><a href="#fn:nagarajan19" class="footnote" rel="footnote">6</a></sup> to show that <em>any</em> result that uses uniform convergence may suffer from this kind of looseness. We likely need alternate techniques, which we will do next.</p>
+
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:mcallester" role="doc-endnote">
+
+      <p>D. Mcallester, <a href="https://link.springer.com/article/10.1023/A:1007618624809">Some PAC-Bayesian Theorems</a>, 1999. <a href="#fnref:mcallester" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:dzuigateroy18" role="doc-endnote">
+
+      <p>G. K. Dziugaite, D. Roy, <a href="https://arxiv.org/pdf/1703.11008.pdf">Computing Nonvacuous Generalization Bounds for Deep (Stochastic) Neural Networks with Many More Parameters than Training Data</a>, 2017. <a href="#fnref:dzuigateroy18" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:bartlett97" role="doc-endnote">
+
+      <p>P. Bartlett, <a href="https://proceedings.neurips.cc/paper/1996/file/fb2fcd534b0ff3bbed73cc51df620323-Paper.pdf">For Valid Generalization the Size of the Weights is More Important than the Size of the Network</a>, 1997. <a href="#fnref:bartlett97" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:bartlett98" role="doc-endnote">
+
+      <p>P. Bartlett, V. Maiorov, R. Meir, <a href="https://proceedings.neurips.cc/paper/1998/file/bc7316929fe1545bf0b98d114ee3ecb8-Paper.pdf">Almost Linear VC Dimension Bounds for Piecewise Polynomial Networks</a>, 1998. <a href="#fnref:bartlett98" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:bartlett19" role="doc-endnote">
+
+      <p>P. Bartlett, N. Harvey, C. Liaw, A. Mehrabian,  <a href="https://www.jmlr.org/papers/volume20/17-612/17-612.pdf">Nearly-tight VC-dimension and Pseudodimension Bounds for Piecewise Linear Neural Networks</a>, 2019. <a href="#fnref:bartlett19" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a> <a href="#fnref:bartlett19:1" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:nagarajan19" role="doc-endnote">
+
+      <p>V. Nagarajan, Z. Kolter, <a href="https://arxiv.org/pdf/1902.04742.pdf">Uniform convergence may be unable to explain generalization in deep learning</a>, 2019. <a href="#fnref:nagarajan19" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

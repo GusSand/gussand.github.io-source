@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <!-- Basic meta elements -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type"    content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Canonical link to help search engines -->
+    <link rel="canonical"     href="http://localhost:4000/fodl/introduction/" />
+    <link rel="shortcut icon" type="image/x-icon" href="/fodl/static/favicon.ico" />
+    <link rel="alternate"     type="application/rss+xml" title="RSS" href="/fodl/atom.xml" />
+    <link rel="stylesheet"    href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i|Playfair+Display+SC&amp;display=swap" />
+    <link rel="stylesheet"    href="/fodl/static/style.css" />
+
+    <title>Introduction</title>
+
+    <!-- Dublin Core metadata for Zotero -->
+    <meta name="DC.title"   content="Introduction" />
+    <meta name="DC.creator" content="" />
+    <meta name="DC.date"    content="" />
+    <meta name="DC.source"  content="Foundations of Deep Learning" />
+
+    <!-- Open Graph metadata -->
+    <meta property="og:type"           content="article" />
+    <meta property="og:title"          content="Introduction" />
+    <meta property="og:article:author" content="" />
+    <meta property="og:description"    content="Quicklinks" />
+    <meta property="og:url"            content="http://localhost:4000/fodl/introduction/" />
+    <meta property="og:image"          content="http://localhost:4000/fodl/static/open-graph-logo.png" />
+    <meta property="og:image:width"    content="200" />
+    <meta property="og:image:height"   content="200" />
+
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css"
+      integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js"
+      integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+    <!-- KaTeX auto-render extention: https://katex.org/docs/autorender.html -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js"
+      integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+      var macros = {
+          "\\P": "\\mathbb{P}"
+      }, delimiters = [
+          { left: "$$",  right: "$$",  display: true}, // Technically, this does not work. See below.
+          { left: "\\[", right: "\\]", display: true},
+          { left: "$",   right: "$",   display: false},
+          { left: "\\(", right: "\\)", display: false}
+      ];
+
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, { delimiters: delimiters, macros: macros });
+
+        // Currently GitHub pages overrides math-engine: mathjax in _config, hence $$..$$ are converted to to scripts tags.
+        // See: https://github.com/github/pages-gem/pull/545
+        document.querySelectorAll("script[type='math/tex']").forEach(function(el) {
+          el.outerHTML = katex.renderToString(el.textContent, { displayMode: false, macros: macros });
+        });
+
+        document.querySelectorAll("script[type='math/tex; mode=display']").forEach(function(el) {
+          el.outerHTML = katex.renderToString(el.textContent.replace(/%.*/g, ''), { displayMode: true, macros: macros });
+        });
+      });
+    </script>
+    <style>.katex { font-size: 1.15em; }</style>
+    <!-- KaTeX copy-tex extention: https://github.com/KaTeX/KaTeX/tree/master/contrib/copy-tex -->
+    <link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.min.js"
+      integrity="sha384-XhWAe6BtVcvEdS3FFKT7Mcft4HJjPqMQvi5V4YhzH9Qxw497jC13TupOEvjoIPy7" crossorigin="anonymous"></script>
+  </head>
+
+  <body class="theme-base-">
+    
+    <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" />
+
+    <!-- Toggleable sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-item">
+        <p>Quicklinks</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="sidebar-nav-item" href="/fodl/">Home</a>
+        <a class="sidebar-nav-item" href="/fodl/manual/">Manual</a>
+        <a class="sidebar-nav-item" href="/fodl/search/">Search</a>
+
+        <!-- The code below is used for manually entered links -->
+        <a href="https://github.com/mahrud/proof"
+          class="sidebar-nav-item" target="_blank">GitHub Repository</a>
+      </nav>
+
+      <div class="sidebar-item">
+        <p>Distributed under an MIT license.</p>
+      </div>
+    </div>
+
+    <!--
+      Wrap is the content to shift when toggling the sidebar.
+      We wrap the content to avoid any CSS collisions with our real content.
+    -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/fodl/">Foundations of Deep Learning</a><br />
+            <small>NYU Tandon, Spring 2022</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content" id="main">
+<!-- ########################################################################################### -->
+<div class="page">
+  <h1 class="page-title">Introduction</h1>
+  <p>Our goal is to reason about (deep) neural networks from the lens of <em>theory</em>.</p>
+
+<p>Unlike many other scientific fields, there currently exists a wide gap between:</p>
+<ul>
+  <li>what the best available tools in theoretical computer science can tell us about modern neural networks, and</li>
+  <li>the actual ways in which modern neural network models work in practice.</li>
+</ul>
+
+<p>This gap between theory and practice is, in my view, unsatisfactory. Yann LeCun invokes the <a href="https://www.youtube.com/watch?v=gG5NCkMerHU&amp;t=3210s">“streetlight effect”</a>: we search for lost keys where we can, not where they really lie.</p>
+
+<p>But here is why (I think) theory matters: by asking carefully crafted (but precise) questions about deep networks, one can precisely answer why certain aspects of neural networks work (or don’t), and what is in the realm of the possible (versus what isn’t). A major motivation behind these course notes is to identify the landscape of how wide exactly these gaps are at present, and how to bridge them.</p>
+
+<p>These notes are by no means the first attempt to do so. Other excellent courses/lecture notes/surveys include:</p>
+
+<ul>
+  <li><a href="https://arxiv.org/pdf/2105.14368.pdf">Fit without Fear</a> by Misha Belkin (UCSD).</li>
+  <li><a href="https://www.notion.so/Mathematics-of-Deep-Learning-05cd9255f03842489083ec7cbb6338d5">Mathematics of Deep Learning</a> by Joan Bruna (NYU).</li>
+  <li><a href="https://mjt.cs.illinois.edu/dlt/">Deep Learning Theory</a> by Matus Telgarsky (UIUC).</li>
+  <li><a href="https://blogs.princeton.edu/imabandit/2020/10/13/2020/">Expository videos</a> by Sebastian Bubeck (Microsoft).</li>
+</ul>
+
+<h2 class="label" id="setup">Setup</h2>
+
+<p>As typical in (supervised) machine learning, our starting point is a list of $n$ example data-label pairs:
+\[ X = {(x_i, y_i)}_{i=1}^n \subset \mathbb{R}^d \times \mathbb{R} \]
+which we will call the <em>training set</em>. This dataset is assumed to acquired via <em>iid sampling</em> with respect to some underlying probability measure $\mu$ defined over $\mathbb{R}^d \times \mathbb{R}$.</p>
+
+<p>Our goal will be to <em>predict</em> the label $y \in \mathbb{R}$ associated with some (hitherto unseen) data point $x \in \mathbb{R}^d$. In order to do so, we will seek a prediction function $f$ that can be expressed as a <em>neural network</em>. Later we will more precisely define neural networks, but the familiar <a href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Neural_network_example.svg/640px-Neural_network_example.svg.png">picture</a> is appropriate for now. The key point is that we want an $f$ that performs “well” on “most” input data points.</p>
+
+<p>Let us first agree to measure “goodness” of performance via a two-argument loss function</p>
+
+\[l(\cdot,\cdot) : \mathbb{R} \times \mathbb{R} \rightarrow \mathbb{R}_{\geq 0}\]
+
+<p>which takes in a predicted label, compares with the truth, and spits out a non-negative cost of fit (smaller is better). Then, quantitatively, our prediction function should be such that the population risk:</p>
+
+\[R(f) = \mathbb{E}_{(x,y) \sim \mu} l(y, f(x))\]
+
+<p>is small.</p>
+
+<p>This immediately poses a <strong>Major Challenge</strong>, since the population risk $R(f)$ is not an easy object to study. For starters, the probability measure $\mu$ may not be be known. Even if magically $\mu$ is available, calculating the expected value with respect to $\mu$ can be difficult. However, we do have training data lying around. Therefore, instead of directly dealing with $R(f)$, we will instead use a proxy quantity called the <em>empirical risk</em>:</p>
+
+\[\hat{R}(f) = \frac{1}{n} \sum_{i=1}^n l(y_i, f(x_i))\]
+
+<p>and seek an $f$ that makes this small.</p>
+
+<script>
+macros["\\f"] = "\\mathscr{F}"
+</script>
+
+<p>Now, reducing the empirical risk $\hat{R}(f)$ to as small as possible is akin to function optimization. To make this numerically tractable, we will first cook up a hypothesis class $\f$. In deep learning, this can be thought of as the set of all neural network models that obey a certain architecture<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote" rel="footnote">1</a></sup>.</p>
+
+<p>But: this approach now poses another <strong>Major Challenge</strong>. What’s a good family of architectures? How do we know whether a certain architecture is rich enough to solve our prediction problem? Can it go the other way (i.e., could we somehow pick a network architecture that is far too rich for our purposes?)</p>
+
+<p>Let us set aside such troubling questions for now. Once the network architecture optimization over $\f$ boils down to tuning the weights and biases of $f$ such that $\hat{R}(f)$ is as small as possible. In other words, we will wish to solve for $f_b$, the “best model” in the hypothesis class $\f$:</p>
+
+\[f_b = \arg \min_{f \in \f} \hat{R}(f) .\]
+
+<p>Alas, yet another <strong>Major Challenge</strong>. Tuning weights and biases <em>to optimality</em> is extremely difficult, except in the simplest of hypothesis classes (such as linear/affine models). In practice, we never solve this optimization problem, but rather just run some kind of incremental “training” procedure for some number of steps that iteratively decreases $\hat{R}(f)$ until everyone is satisfied. Let us assume that we are somehow able to get a decent answer. Let the final result of this training procedure be called $\hat{f}$.</p>
+
+<p>So, to recap: we have introduced two definitions of risk ($R, \hat{R}$), and defined two models ($f_b, \hat{f}$). This final network $\hat{f}$ is what we end up using to perform all future predictions. Our hope is that $\hat{f}$ performs “well” on “most” future data points. Quantitatively, we would like to ensure that the population risk
+\[R(\hat{f}) \]
+is small.</p>
+
+<p>But can we <em>prove</em> that this is the case? Again, the classical theory of supervised learning breaks this down into three components:</p>
+
+\[\begin{aligned}
+R(\hat{f}) = &amp; \quad R(\hat{f}) - \hat{R}(\hat{f}) \\
+          &amp;+ \hat{R}(\hat{f}) - \hat{R}(f_b) \\
+          &amp;+ \hat{R}(f_b) .
+\end{aligned}\]
+
+<p>If all three components are on the right hand side are <em>provably</em> small, then we are in the clear. Let us parse these three terms in reverse order.</p>
+
+<p>First, if
+\[ \hat{R}(f_b) \]
+is small then this means our network architecture $\f$ is rich enough for our purposes (or at least, rich enough to fit the training data well). We call this the <strong>representation error</strong> in deep learning, and a conclusive proof showing that this quantity is small would address the middle Major Challenge identified above.</p>
+
+<p>Second, if
+\[ \hat{R}(\hat{f}) - \hat{R}(f_b) \]
+is small then our numerical training procedure used to find $\hat{f}$ has been reasonably successful. We call this the <strong>optimization error</strong> in deep learning, and a conclusive proof showing that this quantity is small would address the last Major Challenge identified above.</p>
+
+<p>Third, if
+\[R(\hat{f}) - \hat{R}(\hat{f}) \]
+is small then $R$ and $\hat{R}$ are not too different for $\hat{f}$. In other words, we need to prove that the empirical risk is a <em>good proxy</em> for the population risk. we call this the <strong>generalization problem</strong> in deep learning, and a decisive solution to this problem would address the first Major Challenge identified above.</p>
+
+<h2 class="label" id="outline">Outline</h2>
+
+<p>The above narrative is all very classical and can be found in any introductory text on statistical machine learning. For simple cases (such as linear models), good bounds can be derived for all three quantities.</p>
+
+<p>For us, the main difference lies in how we address these questions in the context of deep learning. Somewhat troublingly, clean answers to each of the above foundational problems do not seem to (yet) exist for deep neural network models. It is likely that these problems cannot be studied in isolation, and that theoretical results on these problems interact in mysterious ways<sup id="fnref:fn2" role="doc-noteref"><a href="#fn:fn2" class="footnote" rel="footnote">2</a></sup>.</p>
+
+<p>Still, for the purposes of organizing the existing literature with some degree of coherence, we will follow this classical narrative. Within the context of (deep) neural network learning, we will cover:</p>
+
+<ul>
+  <li>
+    <p><strong>Representation</strong>: Making as few assumptions as possible, we will derive bounds on the <strong>number of neurons</strong> (and the shapes of neural networks) required to achieve low representation error. These are in the form of <strong>universal approximation</strong> theorems. We will explore both the finite setting (where we are trying to memorize a finite training dataset) and the infinite setting (where we are trying to approximate continuous functions). We will see how trading off <strong>depth versus width</strong> leads to interesting behaviors.</p>
+  </li>
+  <li>
+    <p><strong>Optimization</strong>: We will study natural first-order algorithms for neural network training, and derive bounds on the number of training steps required to achieve low optimization error. In some cases, our results will show that the solution achieved by these training procedures are <strong>locally optimal</strong>. In other cases, we will prove that our training procedures achieve <strong>global</strong> optimality. Of particular interest to us are interesting connections to classical kernel-learning called the <strong>Neural Tangent Kernel</strong> (NTK).</p>
+  </li>
+  <li>
+    <p><strong>Generalization</strong>: We will study ways to obtain bounds on the number of training examples required to achieve low generalization error. In many cases, some existing techniques from classical learning theory may lead to vacuous bounds, while other techniques are more successful; our focus will be to get <strong>non-vacuous</strong> generalization guarantees. We will also study <strong>double-descent</strong> phenomena that reveal a curious relationships between the number of parameters and the generalization error.</p>
+  </li>
+  <li>
+    <p><strong>Miscellaneous</strong> topics:  And finally, to round things off, we will analyze other aspects of neural networks of relevance to practice beyond just achieving good prediction. Questions surrounding the <strong>robustness</strong> of neural networks have already emerged. Issues such as <strong>privacy and security</strong> of data/models are paramount. Beyond just label prediction, neural networks are increasingly being used to solve more challenging tasks, including  <strong>synthesis and generation</strong> of new examples.</p>
+  </li>
+</ul>
+
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:fn1" role="doc-endnote">
+
+      <p>We will instantiate $\f$ with specific instances as needed. <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:fn2" role="doc-endnote">
+
+      <p>For example, funnily enough, networks that exhibit very low optimization gap <em>also</em> sometimes lead to excellent generalization, in contradiction to what we would expect from classical learning theory. <a href="#fnref:fn2" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<!-- ########################################################################################### -->
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+    // Highlight search Query
+    var url = window.location.href;
+    if (url.lastIndexOf("?q=") > 0) {
+      // get the index of the parameter, add three (to account for length)
+      var stringloc = url.lastIndexOf("?q=") + 3;
+      // get the substring (query) and decode
+      var searchquery = decodeURIComponent(url.substr(stringloc));
+      // regex matches at beginning of line, end of line or word boundary, useful for poetry
+      var regex = new RegExp("(?:^|\\b)(" + searchquery + ")(?:$|\\b)", "gim");
+      // get, add mark and then set content
+      var content = document.getElementById("main").innerHTML;
+      document.getElementById("main").innerHTML = content.replace(regex, "<mark>$1</mark>");
+    }
+
+    // Toggle sidebar
+    (function(document) {
+      var toggle = document.querySelector('.sidebar-toggle');
+      var sidebar = document.querySelector('#sidebar');
+      var checkbox = document.querySelector('#sidebar-checkbox');
+
+      document.addEventListener('click', function(e) {
+        var target = e.target;
+
+        if(!checkbox.checked ||
+           !sidebar.contains(target) ||
+           (target === checkbox || target === toggle)) return;
+
+        checkbox.checked = false;
+      }, false);
+    })(document);
+    </script>
+
+  </body>
+</html>

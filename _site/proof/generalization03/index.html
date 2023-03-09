@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <!-- Basic meta elements -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type"    content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Canonical link to help search engines -->
+    <link rel="canonical"     href="http://localhost:4000/fodl/generalization03/" />
+    <link rel="shortcut icon" type="image/x-icon" href="/fodl/static/favicon.ico" />
+    <link rel="alternate"     type="application/rss+xml" title="RSS" href="/fodl/atom.xml" />
+    <link rel="stylesheet"    href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i|Playfair+Display+SC&amp;display=swap" />
+    <link rel="stylesheet"    href="/fodl/static/style.css" />
+
+    <title>Chapter 9 - Generalization bounds via stability</title>
+
+    <!-- Dublin Core metadata for Zotero -->
+    <meta name="DC.title"   content="Chapter 9 - Generalization bounds via stability" />
+    <meta name="DC.creator" content="" />
+    <meta name="DC.date"    content="" />
+    <meta name="DC.source"  content="Foundations of Deep Learning" />
+
+    <!-- Open Graph metadata -->
+    <meta property="og:type"           content="article" />
+    <meta property="og:title"          content="Chapter 9 - Generalization bounds via stability" />
+    <meta property="og:article:author" content="" />
+    <meta property="og:description"    content="Quicklinks" />
+    <meta property="og:url"            content="http://localhost:4000/fodl/generalization03/" />
+    <meta property="og:image"          content="http://localhost:4000/fodl/static/open-graph-logo.png" />
+    <meta property="og:image:width"    content="200" />
+    <meta property="og:image:height"   content="200" />
+
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css"
+      integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js"
+      integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+    <!-- KaTeX auto-render extention: https://katex.org/docs/autorender.html -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js"
+      integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+      var macros = {
+          "\\P": "\\mathbb{P}"
+      }, delimiters = [
+          { left: "$$",  right: "$$",  display: true}, // Technically, this does not work. See below.
+          { left: "\\[", right: "\\]", display: true},
+          { left: "$",   right: "$",   display: false},
+          { left: "\\(", right: "\\)", display: false}
+      ];
+
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, { delimiters: delimiters, macros: macros });
+
+        // Currently GitHub pages overrides math-engine: mathjax in _config, hence $$..$$ are converted to to scripts tags.
+        // See: https://github.com/github/pages-gem/pull/545
+        document.querySelectorAll("script[type='math/tex']").forEach(function(el) {
+          el.outerHTML = katex.renderToString(el.textContent, { displayMode: false, macros: macros });
+        });
+
+        document.querySelectorAll("script[type='math/tex; mode=display']").forEach(function(el) {
+          el.outerHTML = katex.renderToString(el.textContent.replace(/%.*/g, ''), { displayMode: true, macros: macros });
+        });
+      });
+    </script>
+    <style>.katex { font-size: 1.15em; }</style>
+    <!-- KaTeX copy-tex extention: https://github.com/KaTeX/KaTeX/tree/master/contrib/copy-tex -->
+    <link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.min.js"
+      integrity="sha384-XhWAe6BtVcvEdS3FFKT7Mcft4HJjPqMQvi5V4YhzH9Qxw497jC13TupOEvjoIPy7" crossorigin="anonymous"></script>
+  </head>
+
+  <body class="theme-base-">
+    
+    <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" />
+
+    <!-- Toggleable sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-item">
+        <p>Quicklinks</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="sidebar-nav-item" href="/fodl/">Home</a>
+        <a class="sidebar-nav-item" href="/fodl/manual/">Manual</a>
+        <a class="sidebar-nav-item" href="/fodl/search/">Search</a>
+
+        <!-- The code below is used for manually entered links -->
+        <a href="https://github.com/mahrud/proof"
+          class="sidebar-nav-item" target="_blank">GitHub Repository</a>
+      </nav>
+
+      <div class="sidebar-item">
+        <p>Distributed under an MIT license.</p>
+      </div>
+    </div>
+
+    <!--
+      Wrap is the content to shift when toggling the sidebar.
+      We wrap the content to avoid any CSS collisions with our real content.
+    -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/fodl/">Foundations of Deep Learning</a><br />
+            <small>NYU Tandon, Spring 2022</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content" id="main">
+<!-- ########################################################################################### -->
+<div class="page">
+  <h1 class="page-title">Chapter 9 - Generalization bounds via stability</h1>
+  <p>In the last two lectures, we have investigated generalization through the lens of</p>
+
+<ul>
+  <li>margin-based regularization</li>
+  <li>model parsimony</li>
+</ul>
+
+<p>Each had their shortfalls, especially in the context of deep learning:</p>
+
+<ul>
+  <li>Regularization very much depends on model architecture and/or training procedure. Implicit bias of GD shows up mysteriously in several places.</li>
+  <li>Model parsimony is hard to measure; interacts with the data distribution in hard-to-quantify ways; and anyway in the last chapter we saw that uniform convergence seems to be an insufficient tool for getting non-trivial bounds, especially in the over-parameterized setting.</li>
+</ul>
+
+<p>Let us now briefly a <em>third</em> lens to understand generalization:</p>
+
+<ul>
+  <li>Algorithmic stability.</li>
+</ul>
+
+<p>Our central hypothesis in this chapter is:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Stable learning implies generalization.
+</code></pre></div></div>
+
+<p>The high level idea is that if the model produced by a training algorithm is not sensitive to any single training data point, then the model generalizes. This idea has been around for some time (and in fact, methods such as bagging<sup id="fnref:breiman" role="doc-noteref"><a href="#fn:breiman" class="footnote" rel="footnote">1</a></sup> explicitly were developed in order to make classifiers stable to individual points.)</p>
+
+<p>(Notice that the definition of stability involves specifying the training procedure; once again, the role of the training algorithm is more clearly illuminated here.)</p>
+
+<p>The plus side is that we <em>won’t</em> need to appeal to uniform convergence, so over-parameterization is not a concern. The minus side is that <em>convexity</em> of the loss seems to be the key tool here, which makes application to deep learning difficult.</p>
+
+<p>On the other hand, our tour of optimization (Chapter 4) has given us tools to deal with (some) non-convex losses. All these will be prove to be fruitful.</p>
+
+<h2 class="label" id="setup">Setup</h2>
+
+<p>Stability as a tool for generalization dates back to an influential paper by Bousquet and Elisseef<sup id="fnref:bousquet02" role="doc-noteref"><a href="#fn:bousquet02" class="footnote" rel="footnote">2</a></sup>, who introduced the notion of <em>uniform stability</em>.</p>
+
+<p>Further refined in the context of empirical risk minimization by Shalev-Schwartz et al.<sup id="fnref:ermstability" role="doc-noteref"><a href="#fn:ermstability" class="footnote" rel="footnote">3</a></sup>.</p>
+
+<h2 class="label" id="algorithmic-stability-of-sgd-for-empirical-risk-minimization">Algorithmic stability of (S)GD for empirical risk minimization</h2>
+
+<h3 id="beyond-convexity">Beyond convexity</h3>
+
+<p>Stability under smoothness + PL-condition. Key paper: here<sup id="fnref:plstability" role="doc-noteref"><a href="#fn:plstability" class="footnote" rel="footnote">4</a></sup>.</p>
+
+<h2 class="label" id="connections-to-differential-privacy">Connections to differential privacy</h2>
+
+<p>Fascinating parallels between</p>
+
+<ul>
+  <li>generalization via uniform stability</li>
+  <li>differential privacy (DP)</li>
+</ul>
+
+<p>which has a different origin story, dating back to several papers by Dwork and co-authors <sup id="fnref:dwork1" role="doc-noteref"><a href="#fn:dwork1" class="footnote" rel="footnote">5</a></sup> <sup id="fnref:dwork2" role="doc-noteref"><a href="#fn:dwork2" class="footnote" rel="footnote">6</a></sup> <sup id="fnref:dwork3" role="doc-noteref"><a href="#fn:dwork3" class="footnote" rel="footnote">7</a></sup>.</p>
+
+<p>In DP the goal is to protect “data leakage” – nothing about the user’s identity (as far as possible) should be revealed from the model parameters. But the <em>method</em> to achieve is the same as the ones we discussed above: make sure the model does not depend on any one data point too much.</p>
+
+<p>Upshot: DP implies uniform stability (and DP-style algorithm design gives a way to control generalization.)</p>
+
+<p><em><strong>Complete</strong></em>.</p>
+
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:breiman" role="doc-endnote">
+
+      <p>L. Breiman, <a href="https://www.stat.berkeley.edu/~breiman/bagging.pdf">Bagging Predictors</a>, 1994. <a href="#fnref:breiman" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:bousquet02" role="doc-endnote">
+
+      <p>O. Bousquet and A. Elisseef, <a href="https://www.jmlr.org/papers/volume2/bousquet02a/bousquet02a.pdf">Stability and Generalization</a>, 2002. <a href="#fnref:bousquet02" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:ermstability" role="doc-endnote">
+
+      <p>S. Shalev-Schwartz, O. Shamir, K. Sridharan, N. Srebro, <a href="https://jmlr.csail.mit.edu/papers/volume11/shalev-shwartz10a/shalev-shwartz10a.pdf">Learnability, Stability and Uniform Convergence</a>, 2010. <a href="#fnref:ermstability" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:plstability" role="doc-endnote">
+
+      <p>Z. Charles and D. Papailiopoulos, <a href="http://proceedings.mlr.press/v80/charles18a/charles18a.pdf">Stability and Generalization of Learning Algorithms that Converge to Global Optima</a>, 2018. <a href="#fnref:plstability" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:dwork1" role="doc-endnote">
+
+      <p>C. Dwork, <a href="https://link.springer.com/chapter/10.1007/11787006_1">Differential Privacy</a>, 2006. <a href="#fnref:dwork1" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:dwork2" role="doc-endnote">
+
+      <p>C. Dwork, F. McSherry, K. Nissim, A. Smith, <a href="https://link.springer.com/chapter/10.1007/11681878_14">Calibrating Noise to Sensitivity in Private Data Analysis</a>, 2006. <a href="#fnref:dwork2" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:dwork3" role="doc-endnote">
+
+      <p>C. Dwork and A. Roth, <a href="https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf">The Algorithmic Foundations of Differential Privacy</a>, 2014. <a href="#fnref:dwork3" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<!-- ########################################################################################### -->
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+    // Highlight search Query
+    var url = window.location.href;
+    if (url.lastIndexOf("?q=") > 0) {
+      // get the index of the parameter, add three (to account for length)
+      var stringloc = url.lastIndexOf("?q=") + 3;
+      // get the substring (query) and decode
+      var searchquery = decodeURIComponent(url.substr(stringloc));
+      // regex matches at beginning of line, end of line or word boundary, useful for poetry
+      var regex = new RegExp("(?:^|\\b)(" + searchquery + ")(?:$|\\b)", "gim");
+      // get, add mark and then set content
+      var content = document.getElementById("main").innerHTML;
+      document.getElementById("main").innerHTML = content.replace(regex, "<mark>$1</mark>");
+    }
+
+    // Toggle sidebar
+    (function(document) {
+      var toggle = document.querySelector('.sidebar-toggle');
+      var sidebar = document.querySelector('#sidebar');
+      var checkbox = document.querySelector('#sidebar-checkbox');
+
+      document.addEventListener('click', function(e) {
+        var target = e.target;
+
+        if(!checkbox.checked ||
+           !sidebar.contains(target) ||
+           (target === checkbox || target === toggle)) return;
+
+        checkbox.checked = false;
+      }, false);
+    })(document);
+    </script>
+
+  </body>
+</html>

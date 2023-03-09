@@ -1,0 +1,97 @@
+I"<p>In the last two lectures, we have investigated generalization through the lens of</p>
+
+<ul>
+  <li>margin-based regularization</li>
+  <li>model parsimony</li>
+</ul>
+
+<p>Each had their shortfalls, especially in the context of deep learning:</p>
+
+<ul>
+  <li>Regularization very much depends on model architecture and/or training procedure. Implicit bias of GD shows up mysteriously in several places.</li>
+  <li>Model parsimony is hard to measure; interacts with the data distribution in hard-to-quantify ways; and anyway in the last chapter we saw that uniform convergence seems to be an insufficient tool for getting non-trivial bounds, especially in the over-parameterized setting.</li>
+</ul>
+
+<p>Let us now briefly a <em>third</em> lens to understand generalization:</p>
+
+<ul>
+  <li>Algorithmic stability.</li>
+</ul>
+
+<p>Our central hypothesis in this chapter is:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Stable learning implies generalization.
+</code></pre></div></div>
+
+<p>The high level idea is that if the model produced by a training algorithm is not sensitive to any single training data point, then the model generalizes. This idea has been around for some time (and in fact, methods such as bagging<sup id="fnref:breiman" role="doc-noteref"><a href="#fn:breiman" class="footnote" rel="footnote">1</a></sup> explicitly were developed in order to make classifiers stable to individual points.)</p>
+
+<p>(Notice that the definition of stability involves specifying the training procedure; once again, the role of the training algorithm is more clearly illuminated here.)</p>
+
+<p>The plus side is that we <em>won’t</em> need to appeal to uniform convergence, so over-parameterization is not a concern. The minus side is that <em>convexity</em> of the loss seems to be the key tool here, which makes application to deep learning difficult.</p>
+
+<p>On the other hand, our tour of optimization (Chapter 4) has given us tools to deal with (some) non-convex losses. All these will be prove to be fruitful.</p>
+
+<h2 class="label" id="setup">Setup</h2>
+
+<p>Stability as a tool for generalization dates back to an influential paper by Bousquet and Elisseef<sup id="fnref:bousquet02" role="doc-noteref"><a href="#fn:bousquet02" class="footnote" rel="footnote">2</a></sup>, who introduced the notion of <em>uniform stability</em>.</p>
+
+<p>Further refined in the context of empirical risk minimization by Shalev-Schwartz et al.<sup id="fnref:ermstability" role="doc-noteref"><a href="#fn:ermstability" class="footnote" rel="footnote">3</a></sup>.</p>
+
+<h2 class="label" id="algorithmic-stability-of-sgd-for-empirical-risk-minimization">Algorithmic stability of (S)GD for empirical risk minimization</h2>
+
+<h3 id="beyond-convexity">Beyond convexity</h3>
+
+<p>Stability under smoothness + PL-condition. Key paper: here<sup id="fnref:plstability" role="doc-noteref"><a href="#fn:plstability" class="footnote" rel="footnote">4</a></sup>.</p>
+
+<h2 class="label" id="connections-to-differential-privacy">Connections to differential privacy</h2>
+
+<p>Fascinating parallels between</p>
+
+<ul>
+  <li>generalization via uniform stability</li>
+  <li>differential privacy (DP)</li>
+</ul>
+
+<p>which has a different origin story, dating back to several papers by Dwork and co-authors <sup id="fnref:dwork1" role="doc-noteref"><a href="#fn:dwork1" class="footnote" rel="footnote">5</a></sup> <sup id="fnref:dwork2" role="doc-noteref"><a href="#fn:dwork2" class="footnote" rel="footnote">6</a></sup> <sup id="fnref:dwork3" role="doc-noteref"><a href="#fn:dwork3" class="footnote" rel="footnote">7</a></sup>.</p>
+
+<p>In DP the goal is to protect “data leakage” – nothing about the user’s identity (as far as possible) should be revealed from the model parameters. But the <em>method</em> to achieve is the same as the ones we discussed above: make sure the model does not depend on any one data point too much.</p>
+
+<p>Upshot: DP implies uniform stability (and DP-style algorithm design gives a way to control generalization.)</p>
+
+<p><em><strong>Complete</strong></em>.</p>
+
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:breiman" role="doc-endnote">
+
+      <p>L. Breiman, <a href="https://www.stat.berkeley.edu/~breiman/bagging.pdf">Bagging Predictors</a>, 1994. <a href="#fnref:breiman" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:bousquet02" role="doc-endnote">
+
+      <p>O. Bousquet and A. Elisseef, <a href="https://www.jmlr.org/papers/volume2/bousquet02a/bousquet02a.pdf">Stability and Generalization</a>, 2002. <a href="#fnref:bousquet02" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:ermstability" role="doc-endnote">
+
+      <p>S. Shalev-Schwartz, O. Shamir, K. Sridharan, N. Srebro, <a href="https://jmlr.csail.mit.edu/papers/volume11/shalev-shwartz10a/shalev-shwartz10a.pdf">Learnability, Stability and Uniform Convergence</a>, 2010. <a href="#fnref:ermstability" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:plstability" role="doc-endnote">
+
+      <p>Z. Charles and D. Papailiopoulos, <a href="http://proceedings.mlr.press/v80/charles18a/charles18a.pdf">Stability and Generalization of Learning Algorithms that Converge to Global Optima</a>, 2018. <a href="#fnref:plstability" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:dwork1" role="doc-endnote">
+
+      <p>C. Dwork, <a href="https://link.springer.com/chapter/10.1007/11787006_1">Differential Privacy</a>, 2006. <a href="#fnref:dwork1" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:dwork2" role="doc-endnote">
+
+      <p>C. Dwork, F. McSherry, K. Nissim, A. Smith, <a href="https://link.springer.com/chapter/10.1007/11681878_14">Calibrating Noise to Sensitivity in Private Data Analysis</a>, 2006. <a href="#fnref:dwork2" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:dwork3" role="doc-endnote">
+
+      <p>C. Dwork and A. Roth, <a href="https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf">The Algorithmic Foundations of Differential Privacy</a>, 2014. <a href="#fnref:dwork3" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

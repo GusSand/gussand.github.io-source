@@ -1,0 +1,27 @@
+I"~<h1 id="overview">Overview</h1>
+
+<p>The impact of deep neural networks in numerous application areas of science, engineering, and technology has never been higher than right now.</p>
+
+<p>Still, progress in practical applications of deep learning has considerably outpaced our understanding of its foundations. Many fundamental questions remain unanswered. Why are we able to train neural networks so efficiently? Why do they perform so well on unseen data? Is there any benefit of one network architecture over another?</p>
+
+<p>These lecture notes are an attempt to sample a growing body of work in theoretical machine learning research that address some of these questions. They supplement a graduate level course taught by <a href="https://chinmayhegde.github.io/">me</a> in the Spring of 2022.</p>
+
+<p>All pages are under construction. Corrections, pointers to omitted results, and other feedback are welcome: just email me, or open a Github pull request at this <a href="https://github.com/chinmayhegde/fodl">repository</a>.</p>
+
+<hr />
+
+<h2 id="table-of-contents">Table of contents</h2>
+
+<ul>
+  <li><a href="/fodl/introduction/">Introduction</a></li>
+  <li><a href="/fodl/representation01/">Chapter 1 - Memorization</a></li>
+  <li><a href="/fodl/representation02/">Chapter 2 - Universal approximators</a></li>
+  <li><a href="/fodl/representation03/">Chapter 3 - The role of depth</a></li>
+  <li><a href="/fodl/optimization01/">Chapter 4 - A primer on optimization</a></li>
+  <li><a href="/fodl/optimization02/">Chapter 5 - Optimizing wide networks</a></li>
+  <li><a href="/fodl/optimization03/">Chapter 6 - Beyond NTK</a></li>
+  <li><a href="/fodl/generalization01/">Chapter 7 - Implicit regularization</a></li>
+  <li><a href="/fodl/generalization02/">Chapter 8 - PAC learning primer and error bounds</a></li>
+  <li><a href="/fodl/generalization03/">Chapter 9 - Generalization bounds via stability</a></li>
+</ul>
+:ET

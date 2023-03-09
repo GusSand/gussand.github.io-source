@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <!-- Basic meta elements -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="content-type"    content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Canonical link to help search engines -->
+    <link rel="canonical"     href="http://localhost:4000/fodl/representation03/" />
+    <link rel="shortcut icon" type="image/x-icon" href="/fodl/static/favicon.ico" />
+    <link rel="alternate"     type="application/rss+xml" title="RSS" href="/fodl/atom.xml" />
+    <link rel="stylesheet"    href="https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i|Playfair+Display+SC&amp;display=swap" />
+    <link rel="stylesheet"    href="/fodl/static/style.css" />
+
+    <title>Chapter 3 - The role of depth</title>
+
+    <!-- Dublin Core metadata for Zotero -->
+    <meta name="DC.title"   content="Chapter 3 - The role of depth" />
+    <meta name="DC.creator" content="" />
+    <meta name="DC.date"    content="" />
+    <meta name="DC.source"  content="Foundations of Deep Learning" />
+
+    <!-- Open Graph metadata -->
+    <meta property="og:type"           content="article" />
+    <meta property="og:title"          content="Chapter 3 - The role of depth" />
+    <meta property="og:article:author" content="" />
+    <meta property="og:description"    content="Quicklinks" />
+    <meta property="og:url"            content="http://localhost:4000/fodl/representation03/" />
+    <meta property="og:image"          content="http://localhost:4000/fodl/static/open-graph-logo.png" />
+    <meta property="og:image:width"    content="200" />
+    <meta property="og:image:height"   content="200" />
+
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css"
+      integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js"
+      integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
+    <!-- KaTeX auto-render extention: https://katex.org/docs/autorender.html -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js"
+      integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"></script>
+    <script>
+      var macros = {
+          "\\P": "\\mathbb{P}"
+      }, delimiters = [
+          { left: "$$",  right: "$$",  display: true}, // Technically, this does not work. See below.
+          { left: "\\[", right: "\\]", display: true},
+          { left: "$",   right: "$",   display: false},
+          { left: "\\(", right: "\\)", display: false}
+      ];
+
+      document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, { delimiters: delimiters, macros: macros });
+
+        // Currently GitHub pages overrides math-engine: mathjax in _config, hence $$..$$ are converted to to scripts tags.
+        // See: https://github.com/github/pages-gem/pull/545
+        document.querySelectorAll("script[type='math/tex']").forEach(function(el) {
+          el.outerHTML = katex.renderToString(el.textContent, { displayMode: false, macros: macros });
+        });
+
+        document.querySelectorAll("script[type='math/tex; mode=display']").forEach(function(el) {
+          el.outerHTML = katex.renderToString(el.textContent.replace(/%.*/g, ''), { displayMode: true, macros: macros });
+        });
+      });
+    </script>
+    <style>.katex { font-size: 1.15em; }</style>
+    <!-- KaTeX copy-tex extention: https://github.com/KaTeX/KaTeX/tree/master/contrib/copy-tex -->
+    <link href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/copy-tex.min.js"
+      integrity="sha384-XhWAe6BtVcvEdS3FFKT7Mcft4HJjPqMQvi5V4YhzH9Qxw497jC13TupOEvjoIPy7" crossorigin="anonymous"></script>
+  </head>
+
+  <body class="theme-base-">
+    
+    <input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox" />
+
+    <!-- Toggleable sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-item">
+        <p>Quicklinks</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="sidebar-nav-item" href="/fodl/">Home</a>
+        <a class="sidebar-nav-item" href="/fodl/manual/">Manual</a>
+        <a class="sidebar-nav-item" href="/fodl/search/">Search</a>
+
+        <!-- The code below is used for manually entered links -->
+        <a href="https://github.com/mahrud/proof"
+          class="sidebar-nav-item" target="_blank">GitHub Repository</a>
+      </nav>
+
+      <div class="sidebar-item">
+        <p>Distributed under an MIT license.</p>
+      </div>
+    </div>
+
+    <!--
+      Wrap is the content to shift when toggling the sidebar.
+      We wrap the content to avoid any CSS collisions with our real content.
+    -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/fodl/">Foundations of Deep Learning</a><br />
+            <small>NYU Tandon, Spring 2022</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content" id="main">
+<!-- ########################################################################################### -->
+<div class="page">
+  <h1 class="page-title">Chapter 3 - The role of depth</h1>
+  <p>For shallow networks, we now know upper bounds on the number of neurons required to “represent” data, where representation is measured either in the sense of exact interpolation (or memorization), or in the sense of universal approximation.</p>
+
+<p>We will continue to revisit these bounds when other important questions such as optimization/learning and out-of-sample generalization arise. In some cases, these bounds are even <em>tight</em>, meaning that we could not hope to do any better.</p>
+
+<p>Which leads us to the natural next question:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Does depth buy us anything at all?
+</code></pre></div></div>
+
+<p>If we have already gotten (some) tight results using shallow models, should there be any <em>theoretical</em> benefits in pursuing analysis of deep networks? Two reasons why answering this question is important:</p>
+
+<p>One, after all, this is a course on “deep” learning theory, so we cannot avoid this question.</p>
+
+<p>But two, for the last decade or so, a lot of folks have been trying very hard to replicate the success of deep networks with <em>highly</em> tuned shallow models (such as kernel machines), but so far have come up short. Understanding precisely why and where shallow models fall short (while deep models succeed) is therefore of importance.</p>
+
+<p>A full answer to the question that we posed above remains elusive, and indeed theory does not tell us too much about why depth in neural networks is important (or whether it is necessary at all!) See the last paragraph of Belkin’s monograph<sup id="fnref:belkin" role="doc-noteref"><a href="#fn:belkin" class="footnote" rel="footnote">1</a></sup> for some speculation. To quote another paper by Shankar et al.<sup id="fnref:shankar" role="doc-noteref"><a href="#fn:shankar" class="footnote" rel="footnote">2</a></sup>:</p>
+
+<blockquote>
+  <p>“…the question remains open whether the performance gap between kernels and neural networks indicates a fundamental limitation of kernel methods or merely an engineering hurdle that can be overcome.”</p>
+</blockquote>
+
+<p>Nonetheless: progress <em>can</em> be made in some limited cases. In this note, we will visit several interesting results that highlight the importance of network depth in the context of representation power. Later we will revisit this in the context of optimization.</p>
+
+<p>Let us focus on “reasonable-width” networks of depth $L &gt; 2$ (because we already know from universal approximation that exponential-width networks of depth-2 can represent pretty much anything we like.) There are two angles of inquiry:</p>
+
+<ul>
+  <li>
+    <p>Approach 1: prove that there exist datasets of some large enough size that can <em>only</em> be memorized by networks of depth $\Omega(L)$, but not by networks of depth $o(L)$.</p>
+  </li>
+  <li>
+    <p>Approach 2: prove that there exist classes of functions that can be $\varepsilon$-approximated <em>only</em> by networks of depth $\Omega(L)$, but not by networks of depth $o(L)$.</p>
+  </li>
+</ul>
+
+<p>Theorems of either type are called <em>depth separation</em> results. Let us start with the latter.</p>
+
+<h2 class="label" id="depth-separation-in-function-approximation">Depth separation in function approximation</h2>
+
+<p>We will first prove a depth separation result for dense feed-forward networks with ReLU activations and univariate (scalar) inputs. This result will generally hold for other families of activations, but for simplicity let’s focus on the ReLU.</p>
+
+<p>We will explicitly construct a (univariate) function $g$ that can be exactly represented by a deep neural network (with error $\varepsilon = 0$) but is provably inapproximable by a much shallower network. This result is by Telgarsky<sup id="fnref:telgarsky" role="doc-noteref"><a href="#fn:telgarsky" class="footnote" rel="footnote">3</a></sup>.</p>
+
+<p><strong class="label" id="DepthSeparation">Theorem</strong>
+  There exists a function $g : [0,1] \rightarrow \R$ that is exactly realized by a ReLU network of constant width and depth $O(L^2)$, but for <em>any</em> neural network $f$ with depth $\leq L$ and number of units, $\leq 2^{L^\delta}$ for any $0 &lt; \delta \leq 1$, $f$ is at least $\varepsilon$-far from $g$, i.e.:</p>
+
+\[\int_0^1 |f(x) - g(x)| dx \geq \varepsilon\]
+
+<p class="theorem">for some absolute constant $\varepsilon &gt; \frac{1}{32}$.</p>
+
+<p>The proof of this theorem is elegant and will inform us also while proving memorization-style depth barriers. But let us first make several remarks on the implications of the results.</p>
+
+<p class="remark"><strong class="label" id="DepthSepRem1">Remark</strong>
+  The “hard” example function $g$ constructed in the above Theorem is for scalar inputs. What happens for the general case of $d$-variate inputs? Eldan and Shamir<sup id="fnref:eldan" role="doc-noteref"><a href="#fn:eldan" class="footnote" rel="footnote">4</a></sup> showed that there exist 3-layer ReLU networks (and $\text{poly}(d)$ width) that cannot be $\varepsilon$-approximated by any two-layer ReLU network unless they have $\Omega(2^d)$ hidden nodes. Therefore, there is already a separation between depth=2 and depth=3 in the high-dimensional case.</p>
+
+<p class="remark"><strong class="label" id="DepthSepRem2">Remark</strong>
+  In the general $d$-variate case, can we get depth separation results for networks of depth=4 or higher? Somewhat surprisingly, the answer appears to be <em>no</em>. Vardi and Shamir<sup id="fnref:vardi" role="doc-noteref"><a href="#fn:vardi" class="footnote" rel="footnote">5</a></sup> showed that a depth separation theorem between ReLU networks of $k \geq 4$ and $k’ &gt; k$ would imply progress on long-standing open problems in <em>circuit lower bounds</em><sup id="fnref:razborov" role="doc-noteref"><a href="#fn:razborov" class="footnote" rel="footnote">6</a></sup>.  To be precise: this (negative) result only applies to vanilla dense feedforward networks. But it is disconcerting that even for the simplest of neural networks, proving clear benefits of depth remains outside the realm of current theoretical machinery.</p>
+
+<p class="remark"><strong class="label" id="DepthSepRem3">Remark</strong>
+  The “hard” example function $g$ constructed in the above Theorem is highly oscillatory within $[0,1]$ (see proof below). Therefore, it has an unreasonably large (super-polynomial) Lipschitz constant. Perhaps if we limited our attention to simple/natural Lipschitz functions, then it could be easier to prove depth-separation results? Not so: even if we only focused on “benign” functions (easy-to-compute functions with polynomially large Lipschitz constant), proving depth lower bonds would similarly imply progress in long-standing problems in computational complexity. See the recent result by Vardi et al.<sup id="fnref:vardi2" role="doc-noteref"><a href="#fn:vardi2" class="footnote" rel="footnote">7</a></sup>.</p>
+
+<p class="remark"><strong class="label" id="DepthSepRem4">Remark</strong>
+  See this paper<sup id="fnref:bengio" role="doc-noteref"><a href="#fn:bengio" class="footnote" rel="footnote">8</a></sup> for an earlier depth-separation result for sum-product networks (which are somewhat less standard architectures).</p>
+
+<p>Telgarsky’s proof uses the following high level ideas:</p>
+
+<p>(a) observe that any ReLU network $g$ simulates a piecewise linear function.</p>
+
+<p>(b) prove that the number of pieces in the range of $g$ grows only polynomially with width but exponentially in depth.</p>
+
+<p>(c) construct a “hard” function $g$ that has an exponential number of linear pieces, and that can be exactly computed by a deep network</p>
+
+<p>(d) but, from part (b), we know that a significantly shallower network cannot simulate so many pieces, thus giving our separation.</p>
+
+<hr />
+
+<p>Before diving into each of them, let us first define (and study) a simple “gadget” neural network that simulates a function $m : \R \rightarrow \R$ which will be helpful throughout. It’s easier to just draw $m(x)$ first:</p>
+
+<p><img src="/fodl/assets/gadget.png" alt="The sawtooth gadget." /></p>
+
+<p>and then observe that:</p>
+
+\[m(x) = \begin{cases}
+0, \qquad \quad ~~ x &lt; 0, \\
+2x, \qquad \quad 0 \leq x &lt; 1/2,\\
+2 - 2x,~ 1/2 \leq x &lt; 1,\\
+0, \qquad \quad ~~ 1 \leq x.
+\end{cases}\]
+
+<p>What happens when we compose $m$ with itself several times? Define:</p>
+
+\[m^{(2)}(x) := m(m(x)), \ldots, m^{(L)}(x) := m(m^{(L-1)}(x)).\]
+
+<p>Then, we start seeing an actual sawtooth function. For example, for $L=2$, we see:</p>
+
+<p><img src="/fodl/assets/gadget2.png" alt="The sawtooth function with $L = 2$." /></p>
+
+<p>Iterating this $L$ times, we get a sawtooth that oscillates a bunch of times over the interval $[0,1]$ and is zero outside<sup id="fnref:fn1" role="doc-noteref"><a href="#fn:fn1" class="footnote" rel="footnote">9</a></sup>. In fact, for any $L$, an easy induction will show that there will be $2^{L-1}$ “triangles”, which are formed using $2^L$ pieces.</p>
+
+<p>But we also can observe that $m(x)$ can be written in terms of ReLUs. Specifically, if $\psi$ is the ReLU activation then:</p>
+
+\[m(x) = 2\left(\psi(x) - 2\psi(x-\frac{1}{2}) + \psi(x-1)\right),\]
+
+<p>which is a tiny (width-3, depth-2) ReLU network. Therefore, $m^{(L)}(x)$ is a univariate function that is exactly written out as width-3, depth-$2L$ ReLU network for any $L$.</p>
+
+<p class="remark"><strong class="label" id="bitextract">Remark</strong>
+  One can view $m^{(L)}(x)$ as a “bit-extractor” function since we have the property that $m^{(L)}(x) = m(\text{frac}(2^{L-1} x))$, where $\text{frac}(x) = x - \lfloor x \rfloor$ is the fractional part of any real number $x$. (<em>Exercise: Prove this.</em>) It is interesting that similar “bit-extractor” gadgets can be found in some earlier universal approximation proofs<sup id="fnref:sieg" role="doc-noteref"><a href="#fn:sieg" class="footnote" rel="footnote">10</a></sup>.</p>
+
+<hr />
+
+<p>So: we have constructed a neural network with depth $O(L)$ which simulates a piecewise linear function over the real line with $2^L$ pieces. In fact, this observation can be generalized quite significantly as follows.</p>
+
+<p class="lemma"><strong class="label" id="numpieces">Lemma</strong>
+  If $p(x)$ and $q(x)$ are univariate functions defined over $[0,1]$ with $s$ and $t$ linear pieces respectively, then:
+      (a) $\alpha p(x) + \beta q(x)$ has at most $s + t$ pieces over $[0,1]$.
+      (b) $q(p(x))$ has at most $st$ pieces over $[0,1]$.</p>
+
+<p>The proof of this lemma is an easy counting exercise over the number of “breakpoints” over $[0,1]$. Most relevant to our discussion, we immediately get the <strong>important</strong> corollary (somewhat informally stated here, there may be hidden constants which I am ignoring):</p>
+
+<p class="corollary"><strong class="label" id="numpiecesrelu">Corollary</strong>
+  For any feedforward ReLU network $f$ with depth $\leq L$ and width $\leq 2^{L^\delta}$, then the total number of pieces  in the range of $f$ is strictly smaller than $2^{L^2}$.</p>
+
+<p>We are now ready for the proof of the main <a href="#DepthSeparation">Theorem</a>.</p>
+
+<p><strong class="label" id="DepthSeparationProof">Proof</strong>
+  Our target function $g$ will be the sawtooth function iterated $L^2 + 2$ times, i.e.,</p>
+
+\[g(x) = m^{(L^2 + 2)}(x).\]
+
+<p>Using <a href="#numpiecesrelu">Corollary</a> we will show that that if $f$ is any feedforard ReLU net with depth $\leq L$ and sub-exponential width, then $f$ cannot approximate a significant fraction of the pieces in $g$. In terms of picture, let us consider the following figure:</p>
+
+<p><img src="/fodl/assets/triangleslice.png" alt="Approximating the sawtooth." /></p>
+
+<p>where $f$ is in red and $g$ (the target) is in navy blue. Let’s draw the horizontal line $y = 1/2$ in purple. We can count the <em>total</em> number of (tiny) triangles in $g$ to be (exactly) equal to</p>
+
+\[2^{L^2 + 2} - 1\]
+
+<p>(the -1 is because the two edge cases have only a half-triangle each). Each of these tiny triangles have height 1/2, so their area is:</p>
+
+\[\frac{1}{2} \cdot \frac{1}{2} \cdot \frac{1}{2^{L^2 + 2}} = 2^{-L^2 - 4} .\]
+
+<p>But <em>any</em> linear piece of $f$ has to have <em>zero</em> intersection at least half of these triangles (since this linear piece can either be above the purple line or below, not both). Therefore, if we look at the error restricted to this particular piece, the area under this curve should be <em>at least</em> the area of the missed triangles (shaded in blue). Therefore, the <em>total</em> error is lower bounded as follows:</p>
+
+\[\begin{aligned}
+  \int_0^1 |f - g | dx &amp;\geq \text{\# missed triangles} \times \text{area of triangle} \\
+  &amp;&gt; \frac{1}{2} \cdot 2^{L^2} \cdot 2^{-L^2 - 4} \\
+  &amp;= \frac{1}{32} .
+  \end{aligned}\]
+
+<p class="proof">This completes the proof.</p>
+
+<p>Let us reflect a bit more on the above proof. The key ingredient was the fact that superpositions (adding units, essentially increasing the “width”) only have a polynomial increase on the number of pieces in the range of $g$, but compositions (essentially increasing the “depth”) have an <em>exponential</em> increase in the number of pieces.</p>
+
+<p>But! this “hard” function $g$, which is the sawtooth over $[0,1]$, was <em>very carefully constructed</em>. To  achieve the exponential scaling law in the number of pieces, the breakpoints in $g$ <em>have</em> to be exactly equispaced, and therefore the weights in every layer in the network have to be identical. Even a tiny perturbation to $g$ dramatically reduces the number of linear pieces in the range of the network. See the following figure illustrated in Hanin and Rolnick (2019)<sup id="fnref:hanin" role="doc-noteref"><a href="#fn:hanin" class="footnote" rel="footnote">11</a></sup>:</p>
+
+<p><img src="/fodl/assets/sawtooth.png" alt="(left) The sawtooth function $g$, representable via a depth-$O(L^2)$, width-3 ReLU net. (right) Range of the same network as $g$ but with a tiny amount of noise added to its weights." /></p>
+
+<p>The plot on the left is the sawtooth function $g$, which, as we proved earlier, is representable via a depth-$O(L^2)$, width-3 ReLU net. The plot on the right is the function implemented by the same network as $g$ but with a tiny amount of noise added to its weights. So even when we did get a depth-separation result, it’s not at all “robust”.</p>
+
+<p>All this to say: depth separation results for function approximation can be rather elusive; they seem to only exist for very special cases; and progress in this direction would result in several fundamental breakthroughs in complexity theory.</p>
+
+<h2 class="label" id="depth-and-memorization">Depth and memorization</h2>
+
+<p>We will now turn to Approach 1. Let’s say that our goal was a bit more modest, and merely wanted to memorize a bunch of $n$ training data points with $d$ input features. Recall that we already showed that $O(\frac{n}{d})$ neurons are sufficient to memorize these points using a “peeling”-style proof.</p>
+
+<p>Paraphrasing this fact: for depth-2 networks with $m$ hidden neurons, the memorization capacity is of the order of $d\cdot m$. This is roughly the same as the number of parameters in the network, so parameter counting intuitively tells us that we cannot do much better. What does depth $&gt;2$ give us really?</p>
+
+<p>Several recent (very nice) papers have addressed this question. Let us start with the following result by Yun et al.<sup id="fnref:yun" role="doc-noteref"><a href="#fn:yun" class="footnote" rel="footnote">12</a></sup>.</p>
+
+<p><strong class="label" id="ThreeLayerMemo">Theorem</strong>
+  Let $X = \lbrace (x_i, y_i)_{i=1}^N \rbrace \subset \R^d \times \R$ be a dataset with distinct $x_i$ and $y_i \in [-1,1]$. Then, there exists a depth-3 ReLU network with hidden units $d_1, d_2$ where:</p>
+
+\[N \leq 4 \lceil \frac{d_1}{2} \rceil \lceil \frac{d_2}{2} \rceil .\]
+
+<p class="theorem">that exactly memorizes $X$.</p>
+
+<p>The proof is somewhat involved, so we will give a brief sketch at the bottom of this page. But let us first study several implications of this result. First, we get the following corollary:</p>
+
+<p class="corollary"><strong class="label" id="RootN">Corollary</strong>
+  (Informal) A depth-3 ReLU network with width $d_1 = d_2 = O(\sqrt{N})$ is sufficient to memorize $N$ points.</p>
+
+<p>This indicates a concrete separation in terms of memorization capacity between depth-2 and depth-3 networks. Suppose we focus on the regime where $d \ll N$. For this case, we have achieved a polynomial reduction in the <em>number of hidden neurons</em> in the network from $O(N)$ in the depth-2 case to $O(\sqrt{N})$ in the depth-3 case.</p>
+
+<p>Notice that the number of <em>parameters</em> in the network still remains $\Theta(N)$ (and the condition in the above <a href="#ThreeLayerMemo">Theorem</a> ensures this, since the “middle” layer has $d_1 \cdot d_2 \gtrsim N$ connections.) But there are ancillary benefits in reducing the number of neurons themselves (for example, in the context of hardware implementation) which we won’t get into.</p>
+
+<p class="remark"><strong class="label" id="multilabel">Remark</strong>
+  A similar result on memorization capacity can be obtained for situations with multiple labels (e.g. in the multi-class classification setting). If the dimension of the label is $d_y &gt; 1$, then the condition is that $d_1 d_2 \gtrsim N d_y$.</p>
+
+<p class="remark"><strong class="label" id="multilabel3">Remark</strong>
+  The multi-label case can be directly applied to provide width-lower bounds on memorizing popular datasets. For example, the well-known ImageNet dataset has about 10M image samples and performs classification over 1000 classes. The width bound suggests that we need networks of width no smaller than $\sqrt{10^7 \times 10^3} \approx 10^5$ ReLUs.</p>
+
+<p>Yun et al.<sup id="fnref:yun:1" role="doc-noteref"><a href="#fn:yun" class="footnote" rel="footnote">12</a></sup> also obtain a version of their result for depth-$L$ networks:</p>
+
+<p><strong class="label" id="ThreeLayerMemo">Theorem</strong>
+  Suppose a depth-$L$ ReLU network has widths of hidden layers $d_1, d_2, \ldots, d_L$ then its memorization capacity is lower bounded by:</p>
+
+\[N := d_1 d_2 + d_2 d_3 + \ldots d_{L-2}d_{L-1} ,\]
+
+<p class="theorem">i.e., a network with this architecture can be tuned to memorize any dataset with at most $N$ points.</p>
+
+<p>This result, while holding for general $L$-hidden-layer networks, doesn’t unfortunately paint a full picture; the proof starts with the result for $L = 2$, and then proceeds to show that all labels can be successively memorized “layer-by-layer”. In particular, to memorize $N$ data points, the width requirement remains $O(\sqrt{N})$ and it is not entirely clear if depth plays a role. We will come back to this shortly.</p>
+
+<hr />
+
+<p>Several interesting questions arise. First, tightness. The above <a href="#ThreeLayerMemo">Theorem</a> shows that depth-2, width-$\sqrt{N}$ networks are sufficient to memorize training sets of size $N$. But is this width dependence of $\sqrt{N}$ also <em>necessary</em>? Parameter counting suggests that this is indeed the case. Formally, Yun et al.<sup id="fnref:yun:2" role="doc-noteref"><a href="#fn:yun" class="footnote" rel="footnote">12</a></sup> provide an elegant proof for a (matching) lower bound:</p>
+
+<p><strong class="label" id="ThreeLayerLB">Theorem</strong>
+  Suppose a depth-$3$ ReLU network has widths of hidden layers $d_1, d_2$. If</p>
+
+\[2 d_1 d_2 + d_2 + 2 &lt; N,\]
+
+<p class="theorem">then there exists a dataset with $N$ points that cannot be memorized.</p>
+
+<p class="proof"><strong class="label" id="ThreeLayerLBProof">Proof</strong>
+  <strong><em>(Complete)</em></strong>.</p>
+
+<p>Observe that this does not directly give lower bounds on the number of <em>parameters</em> needed to memorize data. We will come back to this question below.</p>
+
+<p>Next, extensions to other networks. The above results are for feedforward ReLU networks; Yun et al.<sup id="fnref:yun:3" role="doc-noteref"><a href="#fn:yun" class="footnote" rel="footnote">12</a></sup> also showed this for “hard-tanh” activations (which is a “clipped” ReLU activation that saturates at +1 for $x \geq 1$). Similar results (with number of connections approximately equal to the number of data points) have been obtained for polynomial networks<sup id="fnref:ge" role="doc-noteref"><a href="#fn:ge" class="footnote" rel="footnote">13</a></sup> and residual networks<sup id="fnref:resnet" role="doc-noteref"><a href="#fn:resnet" class="footnote" rel="footnote">14</a></sup>.</p>
+
+<p>What about more exotic families of networks? Could it be that there is some yet-undiscovered model that may give better memorization?</p>
+
+<p>In a very nice (and surprisingly general) result, Vershynin<sup id="fnref:vershynin" role="doc-noteref"><a href="#fn:vershynin" class="footnote" rel="footnote">15</a></sup> showed the following:</p>
+
+<p><strong class="label" id="VershLLayer">Theorem</strong>
+  (Informal) Consider well-separated data of unit norm and binary labels. Consider depth-$L$ networks ($L \geq 3$) with arbitrary activations across neurons but without exponentially narrow bottlenecks. If the number of “wires” in the second layer of a network and later:</p>
+
+\[W := d_1 d_2 + d_2 d_3 + \ldots + d_{L-1} d_L ,\]
+
+<p>is slightly larger than $N$, specifically:</p>
+
+\[W \geq N \log^5 N ,\]
+
+<p>then some choice of weights can memorize this dataset.</p>
+
+<p class="theorem">The high level idea in the proof of this result is to use the first layer as a preconditioner that separates data points into an almost-orthogonal set (in fact, a simple random Gaussian projection layer will do), and then any sequence of final layers that will memorize label assignments.</p>
+
+<p>The precise definitions of “well-separatedness” and “bottlenecks” can be found in the paper, but the key here is that this bound is independent of depth, choice of activations (whether ReLU or threshold or some mixture of both), and any other architectural details. Again, we see that there doesn’t seem to be a clear impact of the depth parameter $L$ on network capacity.</p>
+
+<p>For a more precise discussion along these lines, see the review section of a very nice (and recent) paper by Rajput et al.<sup id="fnref:rajput" role="doc-noteref"><a href="#fn:rajput" class="footnote" rel="footnote">16</a></sup>.</p>
+
+<h2 class="label" id="depth-versus-number-of-parameters">Depth versus number of parameters</h2>
+
+<p>In the above discussion we saw that that moving from depth-2 to depth-3 networks helped significantly reduced the number of <em>neurons</em> needed to memorize $N$ arbitrary data points from $O(N)$ to $O(\sqrt{N})$ in several cases. The number of <em>parameters</em> in all these constructions remained $O(N)$ (but no better).</p>
+
+<p>Is this the best possible we can do, or does depth help? We already encountered the result by Sontag<sup id="fnref:sontag" role="doc-noteref"><a href="#fn:sontag" class="footnote" rel="footnote">17</a></sup> showing an $\Omega(N)$ lower bound; specifically, given any network with sub-linear ($o(N)$) parameters, there exists at least one “worst-case” dataset that cannot be memorized.</p>
+
+<p>Maybe our definition of memorization is too pessimistic, and we don’t have to fret about worst case behavior? Let us contrast Sontag’s result with other lower bounds from learning theory. Until now, we have quantified the memorization capacity of a network in terms of its ability to exactly interpolate <em>any</em> dataset. But we can weaken this definition a bit.</p>
+
+<p>The <em>VC-dimension</em> of any family of models is defined as the maximum number of data points that the model can “shatter” (i.e., exactly interpolate labels). Notice that this is a “best-case” definition; if the VC dimension is $N$ there should exist at least one dataset of $N$ points (with arbitrary labels) that the network is able to memorize.</p>
+
+<p>Existing VC dimension bounds state that if a network architecture has $W$ weights then the VC dimension is no greater than $O(W^2)$<sup id="fnref:bartlett" role="doc-noteref"><a href="#fn:bartlett" class="footnote" rel="footnote">18</a></sup> <em>no matter the depth</em>. Therefore, in the “best-case” scenario, to memorize $N$ samples with arbitrary labels, we would require at least $\Omega(\sqrt{N})$ parameters, and we could not really hope to do any better<sup id="fnref:bartlett2" role="doc-noteref"><a href="#fn:bartlett2" class="footnote" rel="footnote">19</a></sup>.</p>
+
+<p>Can we reconcile this gap between the “best” and “worst” cases of memorization capacity? In a very recent result, Vardi et al.<sup id="fnref:vardi:1" role="doc-noteref"><a href="#fn:vardi" class="footnote" rel="footnote">5</a></sup> have been able to show that the $\sqrt{N}$ dependence is in fact tight (up to log factors). Under the assumption that the data is bounded norm and well-separated, then a width-12, depth-$\tilde{O}(\sqrt{N})$ network with $\tilde{O}(\sqrt{N})$ parameters can memorize any dataset. This result improves upon a previous result<sup id="fnref:yun2" role="doc-noteref"><a href="#fn:yun2" class="footnote" rel="footnote">20</a></sup> that had initially achieved a sub-linear upper bound of $O(N^{\frac{2}{3}})$ parameters.</p>
+
+<p>The proof of this result is somewhat combinatorial in nature. We see (again!) the bit-extractor gadget network being used here. There is another catch: the <em>bit complexity</em> of the network is very large (it scales as $\sqrt{N}$), so the price to pay for a very small number of weights is that we end up stuffing many more bits in each weight.</p>
+
+<h2 class="label" id="proof-of-3-layer-memorization-capacity">Proof of 3-layer memorization capacity</h2>
+
+<p><strong><em>(COMPLETE)</em></strong></p>
+
+<hr />
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:belkin" role="doc-endnote">
+
+      <p>Mikhail Belkin, <a href="https://arxiv.org/pdf/2105.14368.pdf">Fit without Fear</a>, 2021. <a href="#fnref:belkin" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:shankar" role="doc-endnote">
+
+      <p>V. Shankar, A. Fang, W. Guo, S. Fridovich-Keil, L. Schmidt, J. Ragan-Kelley, B. Recht, <a href="https://arxiv.org/abs/2003.02237">Neural Kernels without Tangents</a>, 2020. <a href="#fnref:shankar" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:telgarsky" role="doc-endnote">
+
+      <p>M. Telgarsky, <a href="http://proceedings.mlr.press/v49/telgarsky16.pdf">Benefits of depth in neural networks</a>, 2016. <a href="#fnref:telgarsky" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:eldan" role="doc-endnote">
+
+      <p>R. Eldan and O. Shamir, <a href="http://proceedings.mlr.press/v49/eldan16.pdf">The Power of Depth for Feedforward Neural Networks</a>, 2016. <a href="#fnref:eldan" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:vardi" role="doc-endnote">
+
+      <p>G. Vardi, G. Yehudai, O. Shamir, <a href="https://arxiv.org/pdf/2110.03187.pdf">On the Optimal Memorization Power of ReLU Neural Networks</a>, 2022. <a href="#fnref:vardi" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a> <a href="#fnref:vardi:1" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;<sup>2</sup></a></p>
+    </li>
+    <li id="fn:razborov" role="doc-endnote">
+
+      <p>A. Razborov and S. Rudich. <a href="https://www.sciencedirect.com/science/article/pii/S002200009791494X">Natural proofs</a>, 1997. <a href="#fnref:razborov" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:vardi2" role="doc-endnote">
+
+      <p>G. Vardi, D. Reichmann, T. Pitassi, and O. Shamir, <a href="http://proceedings.mlr.press/v134/vardi21a/vardi21a.pdf">Size and Depth Separation in Approximating Benign Functions with Neural Networks</a>, 2021. <a href="#fnref:vardi2" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:bengio" role="doc-endnote">
+
+      <p>O. Delalleau and Y. Bengio, <a href="https://papers.nips.cc/paper/2011/file/8e6b42f1644ecb1327dc03ab345e618b-Paper.pdf">Shallow vs. Deep Sum-Product Networks</a>, 2011. <a href="#fnref:bengio" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:fn1" role="doc-endnote">
+
+      <p>Somewhat curiously, these kinds of oscillatory (“sinusoidal”/periodic) functions are common occurrences while proving cryptographic lower bounds for neural networks. See, for example, <a href="https://proceedings.neurips.cc/paper/2021/hash/f78688fb6a5507413ade54a230355acd-Abstract.html">Song, Zadik, and Bruna</a>, 2021. <a href="#fnref:fn1" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:sieg" role="doc-endnote">
+
+      <p>H. Siegelmann and D. Sontag, <a href="https://binds.cs.umass.edu/papers/1992_Siegelmann_COLT.pdf">On the Computational Power of Neural Networks</a>, 1992. <a href="#fnref:sieg" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:hanin" role="doc-endnote">
+
+      <p>B. Hanin and D. Rolnick, <a href="https://arxiv.org/pdf/1901.09021.pdf">Complexity of Linear Regions in Deep Networks</a>, 2019. <a href="#fnref:hanin" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:yun" role="doc-endnote">
+
+      <p>C. Yun, A. Jadbabaie, S. Sra, <a href="https://arxiv.org/pdf/1810.07770.pdf">Small ReLU Networks are Powerful Memorizers</a>, 2019. <a href="#fnref:yun" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a> <a href="#fnref:yun:1" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;<sup>2</sup></a> <a href="#fnref:yun:2" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;<sup>3</sup></a> <a href="#fnref:yun:3" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;<sup>4</sup></a></p>
+    </li>
+    <li id="fn:ge" role="doc-endnote">
+
+      <p>R. Ge, R. Wang, H. Zhao, <a href="https://arxiv.org/pdf/1909.11837.pdf">Mildly Overparametrized Neural Nets can Memorize Training Data Efficiently</a>, 2019. <a href="#fnref:ge" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:resnet" role="doc-endnote">
+
+      <p>M. Hardt and T. Ma, <a href="https://openreview.net/forum?id=ryxB0Rtxx">Identity Matters in Deep Learning</a>, 2017. <a href="#fnref:resnet" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:vershynin" role="doc-endnote">
+
+      <p>R. Vershynin, <a href="https://arxiv.org/pdf/2001.06938.pdf">Memory capacity of neural networks with threshold and ReLU activations</a>, 2020. <a href="#fnref:vershynin" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:rajput" role="doc-endnote">
+
+      <p>S. Rajput, K. Sreenivasan, D. Papailiopoulos, A. Karbasi, <a href="https://proceedings.neurips.cc/paper/2021/file/69dd2eff9b6a421d5ce262b093bdab23-Paper.pdf">An Exponential Improvement on the Memorization Capacity of Deep Threshold Networks</a>, 2021. <a href="#fnref:rajput" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:sontag" role="doc-endnote">
+
+      <p>E. Sontag, <a href="http://www.sontaglab.org/FTPDIR/generic.pdf">Shattering All Sets of k Points in “General Position” Requires (k − 1)/2 Parameters</a>, 1997. <a href="#fnref:sontag" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:bartlett" role="doc-endnote">
+
+      <p>P. Bartlett, V. Maiorov, R. Meir, <a href="https://proceedings.neurips.cc/paper/1998/file/bc7316929fe1545bf0b98d114ee3ecb8-Paper.pdf">Almost Linear VC Dimension Bounds for Piecewise Polynomial Networks </a>, 1998. <a href="#fnref:bartlett" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:bartlett2" role="doc-endnote">
+
+      <p>Aside: this is not quite precise; a sharper VC dimension bound of $O(WL \log W)$ can be obtained for depth-$L$ networks. See P. Bartlett, N. Harvey, C. Liaw, A. Mehrobian, <a href="https://www.jmlr.org/papers/volume20/17-612/17-612.pdf">Nearly-tight VC-dimension and Pseudodimension Bounds for Piecewise Linear Neural Networks</a>, 2019. <a href="#fnref:bartlett2" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+    <li id="fn:yun2" role="doc-endnote">
+
+      <p>S. Park, J. Lee, C. Yun, J. Shin, <a href="https://arxiv.org/pdf/2010.13363.pdf">Provable Memorization via Deep Neural Networks using Sublinear Parameters</a>, 2021. <a href="#fnref:yun2" class="reversefootnote" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+    </li>
+  </ol>
+</div>
+
+</div>
+
+<!-- ########################################################################################### -->
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+    // Highlight search Query
+    var url = window.location.href;
+    if (url.lastIndexOf("?q=") > 0) {
+      // get the index of the parameter, add three (to account for length)
+      var stringloc = url.lastIndexOf("?q=") + 3;
+      // get the substring (query) and decode
+      var searchquery = decodeURIComponent(url.substr(stringloc));
+      // regex matches at beginning of line, end of line or word boundary, useful for poetry
+      var regex = new RegExp("(?:^|\\b)(" + searchquery + ")(?:$|\\b)", "gim");
+      // get, add mark and then set content
+      var content = document.getElementById("main").innerHTML;
+      document.getElementById("main").innerHTML = content.replace(regex, "<mark>$1</mark>");
+    }
+
+    // Toggle sidebar
+    (function(document) {
+      var toggle = document.querySelector('.sidebar-toggle');
+      var sidebar = document.querySelector('#sidebar');
+      var checkbox = document.querySelector('#sidebar-checkbox');
+
+      document.addEventListener('click', function(e) {
+        var target = e.target;
+
+        if(!checkbox.checked ||
+           !sidebar.contains(target) ||
+           (target === checkbox || target === toggle)) return;
+
+        checkbox.checked = false;
+      }, false);
+    })(document);
+    </script>
+
+  </body>
+</html>

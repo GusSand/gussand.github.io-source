@@ -1,0 +1,23 @@
+current directory: /home/gussand/fodl/vendor/bundle/ruby/2.7.0/gems/racc-1.6.0/ext/racc/cparse
+/usr/bin/ruby2.7 -I /usr/lib/ruby/2.7.0 -r ./siteconf20220826-26839-130t2v9.rb extconf.rb
+checking for rb_block_call()... yes
+checking for rb_ary_subseq()... yes
+creating Makefile
+
+current directory: /home/gussand/fodl/vendor/bundle/ruby/2.7.0/gems/racc-1.6.0/ext/racc/cparse
+make "DESTDIR=" clean
+make[1]: Entering directory '/home/gussand/fodl/vendor/bundle/ruby/2.7.0/gems/racc-1.6.0/ext/racc/cparse'
+make[1]: Leaving directory '/home/gussand/fodl/vendor/bundle/ruby/2.7.0/gems/racc-1.6.0/ext/racc/cparse'
+
+current directory: /home/gussand/fodl/vendor/bundle/ruby/2.7.0/gems/racc-1.6.0/ext/racc/cparse
+make "DESTDIR="
+make[1]: Entering directory '/home/gussand/fodl/vendor/bundle/ruby/2.7.0/gems/racc-1.6.0/ext/racc/cparse'
+compiling cparse.c
+linking shared-object racc/cparse.so
+make[1]: Leaving directory '/home/gussand/fodl/vendor/bundle/ruby/2.7.0/gems/racc-1.6.0/ext/racc/cparse'
+
+current directory: /home/gussand/fodl/vendor/bundle/ruby/2.7.0/gems/racc-1.6.0/ext/racc/cparse
+make "DESTDIR=" install
+make[1]: Entering directory '/home/gussand/fodl/vendor/bundle/ruby/2.7.0/gems/racc-1.6.0/ext/racc/cparse'
+/usr/bin/install -c -m 0755 cparse.so ./.gem.20220826-26839-1j3t4o1/racc
+make[1]: Leaving directory '/home/gussand/fodl/vendor/bundle/ruby/2.7.0/gems/racc-1.6.0/ext/racc/cparse'
