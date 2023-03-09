@@ -39,4 +39,4 @@ exclude:
   - proof.gemspec
 
 # Theme
-remote_theme: "mahrud/proof"
+remote_theme: "hydecorp/hydejack"
